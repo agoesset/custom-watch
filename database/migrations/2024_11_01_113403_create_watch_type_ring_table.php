@@ -11,12 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('custom_products', function (Blueprint $table) {
+        Schema::create('watch_type_ring', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('image');
-            $table->enum('part', ['Cases', 'Dials', 'Crown', 'Bezel', 'Ring', 'Hand', 'Second Hand', 'Rubber']);
-            $table->string('price');
+            $table->foreignId('watch_type_id')->constrained()->onDelete('cascade');
+            $table->foreignId('ring_id')->constrained('watch_rings')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -26,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('custom_products');
+        Schema::dropIfExists('watch_type_ring');
     }
 };

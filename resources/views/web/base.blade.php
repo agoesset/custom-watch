@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <title>Norda - Minimal eCommerce HTML Template</title>
+    <title>@yield('title','Customwatch.id')</title>
     <meta name="robots" content="noindex, follow" />
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -25,7 +25,64 @@
     <link rel="stylesheet" href="{{('assets/css/plugins/magnific-popup.css')}}">
     <link rel="stylesheet" href="{{('assets/css/plugins/jquery-ui.css')}}">
     <link rel="stylesheet" href="{{('assets/css/style.css')}}">
+    <style>
+        .product-details-tab {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            /* Pusatkan secara horizontal */
+            align-items: center;
+            /* Pusatkan secara vertikal */
+        }
 
+        .layer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Pastikan layer berada tepat di tengah */
+            width: 400px;
+            /* Ukuran gambar */
+            height: 400px;
+            /* Ukuran gambar */
+        }
+
+        .layer img {
+            width: 100%;
+            /* Responsif terhadap ukuran layer */
+            height: 100%;
+            object-fit: cover;
+            /* Memastikan gambar terisi tanpa distorsi */
+        }
+
+        /* Layer dengan z-index untuk menumpuk sesuai urutan */
+        .layer1 {
+            z-index: 1;
+        }
+
+        .layer2 {
+            z-index: 2;
+        }
+
+        .layer3 {
+            z-index: 3;
+        }
+
+        .layer4 {
+            z-index: 4;
+        }
+
+        .layer5 {
+            z-index: 5;
+        }
+
+        .selected-case {
+            border: 2px solid #000;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
@@ -34,53 +91,6 @@
         <header class="header-area transparent-bar section-padding-1">
             <div class="container">
                 <div class="header-large-device">
-                    <!-- <div class="header-top header-top-ptb-1 border-bottom-1">
-                        <div class="row">
-                            <div class="col-xl-4 col-lg-5">
-                                <div class="header-offer-wrap">
-                                    <p><i class="icon-paper-plane"></i> FREE SHIPPING world wide for all orders over <span>$199</span></p>
-                                </div>
-                            </div>
-                            <div class="col-xl-8 col-lg-7">
-                                <div class="header-top-right">
-                                    <div class="same-style-wrap">
-                                        <div class="same-style same-style-border track-order">
-                                            <a href="order-tracking.html">Track Your Order</a>
-                                        </div>
-                                        <div class="same-style same-style-border language-wrap">
-                                            <a class="language-dropdown-active" href="#">English <i class="icon-arrow-down"></i></a>
-                                            <div class="language-dropdown">
-                                                <ul>
-                                                    <li><a href="#">English</a></li>
-                                                    <li><a href="#">French</a></li>
-                                                    <li><a href="#">German</a></li>
-                                                    <li><a href="#">Spanish</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                        <div class="same-style same-style-border currency-wrap">
-                                            <a class="currency-dropdown-active" href="#">US Dollar <i class="icon-arrow-down"></i></a>
-                                            <div class="currency-dropdown">
-                                                <ul>
-                                                    <li><a href="#">USD</a></li>
-                                                    <li><a href="#">EUR</a></li>
-                                                    <li><a href="#">Real</a></li>
-                                                    <li><a href="#">BDT</a></li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="social-style-1 social-style-1-mrg">
-                                        <a href="#"><i class="icon-social-twitter"></i></a>
-                                        <a href="#"><i class="icon-social-facebook"></i></a>
-                                        <a href="#"><i class="icon-social-instagram"></i></a>
-                                        <a href="#"><i class="icon-social-youtube"></i></a>
-                                        <a href="#"><i class="icon-social-pinterest"></i></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
                     <div class="header-bottom">
                         <div class="row align-items-center">
                             <div class="col-xl-2 col-lg-2">
@@ -95,12 +105,12 @@
                                     <nav>
                                         <ul>
                                             <li>
-                                                <a href="index.html">HOME </a>
+                                                <a href="{{ route('home') }}">HOME </a>
                                             </li>
                                             <li>
-                                                <a href="shop.html">CONFIGURATOR </a>
+                                                <a href="{{ route('configurator') }}">CONFIGURATOR </a>
                                             </li>
-                                            <li><a href="blog.html">SHOP </a>
+                                            <li><a href="{{ route('shop') }}">SHOP </a>
                                                 <ul class="sub-menu-style">
                                                     <li><a href="blog.html">blog standard </a></li>
                                                     <li><a href="blog-no-sidebar.html">blog no sidebar </a></li>
@@ -109,9 +119,11 @@
                                                 </ul>
                                             </li>
                                             <li>
-                                                <a href="#">HISTORY </a>
+                                                <a href="{{ route('history') }}">HISTORY </a>
                                             </li>
-                                            <li><a href="contact.html">CONTACT </a></li>
+                                            <li>
+                                                <a href="{{ route('contact') }}">CONTACT </a>
+                                            </li>
                                         </ul>
                                     </nav>
                                 </div>
@@ -130,17 +142,6 @@
                                             </form>
                                         </div>
                                     </div>
-                                    <!-- <div class="same-style-2">
-                                        <a href="login-register.html"><i class="icon-user"></i></a>
-                                    </div> -->
-                                    <!-- <div class="same-style-2">
-                                        <a href="wishlist.html"><i class="icon-heart"></i><span class="pro-count red">03</span></a>
-                                    </div> -->
-                                    <!-- <div class="same-style-2 header-cart">
-                                        <a class="cart-active" href="#">
-                                            <i class="icon-basket-loaded"></i><span class="pro-count red">02</span>
-                                        </a>
-                                    </div> -->
                                 </div>
                             </div>
                         </div>
@@ -346,1143 +347,7 @@
                 </div>
             </div>
         </div>
-        <div class="slider-area bg-gray">
-            <div class="hero-slider-active-1 hero-slider-pt-1 nav-style-1 dot-style-1">
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="hero-slider-content-1 hero-slider-content-1-pt-1 slider-animated-1">
-                                    <h4 class="animated">New Arrivals</h4>
-                                    <h1 class="animated">Leather Simple <br>Backpacks</h1>
-                                    <p class="animated">Discover our collection with leather simple backpacks. Less is more never out trend.</p>
-                                    <div class="btn-style-1">
-                                        <a class="animated btn-1-padding-1" href="product-details.html">Explore Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="hero-slider-img-1 slider-animated-1">
-                                    <img class="animated" src="{{('assets/images/slider/hm-1-slider-1.png')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="single-hero-slider single-animation-wrap">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="hero-slider-content-1 hero-slider-content-1-pt-1 slider-animated-1">
-                                    <h4 class="animated">New Arrivals</h4>
-                                    <h1 class="animated">Leather Simple <br>Backpacks</h1>
-                                    <p class="animated">Discover our collection with leather simple backpacks. Less is more never out trend.</p>
-                                    <div class="btn-style-1">
-                                        <a class="animated btn-1-padding-1" href="product-details.html">Explore Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 col-md-6 col-sm-6">
-                                <div class="hero-slider-img-1 slider-animated-1">
-                                    <img class="animated" src="{{('assets/images/slider/hm-1-slider-1.png')}}" alt="">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="service-area">
-            <div class="container">
-                <div class="service-wrap">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <div class="single-service-wrap mb-30">
-                                <div class="service-icon">
-                                    <i class="icon-cursor"></i>
-                                </div>
-                                <div class="service-content">
-                                    <h3>Free Shipping</h3>
-                                    <span>Orders over $100</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <div class="single-service-wrap mb-30">
-                                <div class="service-icon">
-                                    <i class="icon-reload"></i>
-                                </div>
-                                <div class="service-content">
-                                    <h3>Free Returns</h3>
-                                    <span>Within 30 days</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <div class="single-service-wrap mb-30">
-                                <div class="service-icon">
-                                    <i class="icon-lock"></i>
-                                </div>
-                                <div class="service-content">
-                                    <h3>100% Secure</h3>
-                                    <span>Payment Online</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 col-sm-6 col-12">
-                            <div class="single-service-wrap mb-30">
-                                <div class="service-icon">
-                                    <i class="icon-tag"></i>
-                                </div>
-                                <div class="service-content">
-                                    <h3>Best Price</h3>
-                                    <span>Guaranteed</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="about-us-area pt-85">
-            <div class="container">
-                <div class="border-bottom-1 about-content-pb">
-                    <div class="row">
-                        <div class="col-lg-3 col-md-3">
-                            <div class="about-us-logo">
-                                <img src="{{('assets/images/about/logo.png')}}" alt="logo">
-                            </div>
-                        </div>
-                        <div class="col-lg-9 col-md-9">
-                            <div class="about-us-content">
-                                <h3>Introduce</h3>
-                                <p>Norda store is a business concept is to offer fashion and quality at the best price. It has since it was founded in 2022 grown into one of the best WooCommerce Fashion Theme. The content of this site is copyright-protected and is the property of David Moye Creative.</p>
-                                <div class="signature">
-                                    <h2>David Moye</h2>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="product-area section-padding-1 pt-115 pb-75">
-            <div class="container">
-                <div class="section-title-tab-wrap mb-45">
-                    <div class="section-title">
-                        <h2>Featured Products</h2>
-                    </div>
-                    <div class="tab-style-1 nav">
-                        <a class="active" href="#product-1" data-bs-toggle="tab">Best Seller</a>
-                        <a href="#product-2" data-bs-toggle="tab"> Trending</a>
-                        <a href="#product-3" data-bs-toggle="tab">New Arrivals </a>
-                        <a href="#product-4" data-bs-toggle="tab">All Products</a>
-                    </div>
-                </div>
-            </div>
-            <div class="container-fluid">
-                <div class="tab-content jump">
-                    <div id="product-1" class="tab-pane active">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-1.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Black T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-2.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Black Simple Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$38.50</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-3.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-20%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Lined Brown Swearshirt</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$46.00</span>
-                                                <span class="old-price">$66.75</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-4.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Simple Backpack</a></h4>
-                                            <div class="product-price">
-                                                <span>$102.54</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-5.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-15%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Contrasting Sunglasses</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$35.45</span>
-                                                <span class="old-price">$45.80</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-6.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Blue T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-7.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Sport Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$37.86</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-8.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-black">Out of stock</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Basic Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$46.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="product-2" class="tab-pane">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-8.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Basic Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-7.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Sport Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$38.50</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-6.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-20%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Blue T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$46.00</span>
-                                                <span class="old-price">$66.75</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-5.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Contrasting Sunglasses</a></h4>
-                                            <div class="product-price">
-                                                <span>$102.54</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-4.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-15%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Simple Backpack</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$35.45</span>
-                                                <span class="old-price">$45.80</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-3.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Lined Brown Swearshirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-2.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Black Simple Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$37.86</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-1.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-black">Out of stock</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Black T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$46.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="product-3" class="tab-pane">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img class="default-img" src="{{('assets/images/product/product-4.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Simple Backpack</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-3.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Lined Brown Swearshirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$38.50</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-2.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-20%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Black Simple Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$46.00</span>
-                                                <span class="old-price">$66.75</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-1.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Black T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$102.54</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-8.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-15%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Basic Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$35.45</span>
-                                                <span class="old-price">$45.80</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-7.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Sport Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-6.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Blue T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$37.86</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-5.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-black">Out of stock</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Contrasting Sunglasses</a></h4>
-                                            <div class="product-price">
-                                                <span>$46.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="product-4" class="tab-pane">
-                        <div class="row">
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-6.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Blue T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-7.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Sport Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$38.50</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-8.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-20%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Basic Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$46.00</span>
-                                                <span class="old-price">$66.75</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-5.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Contrasting Sunglasses</a></h4>
-                                            <div class="product-price">
-                                                <span>$102.54</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-4.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-red">-15%</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Norda Simple Backpack</a></h4>
-                                            <div class="product-price">
-                                                <span class="new-price">$35.45</span>
-                                                <span class="old-price">$45.80</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-3.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Lined Brown Swearshirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$56.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-2.jpg')}}" alt="">
-                                        </a>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Black Simple Sneaker</a></h4>
-                                            <div class="product-price">
-                                                <span>$37.86</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
-                                <div class="single-product-wrap mb-35">
-                                    <div class="product-img product-img-zoom mb-20">
-                                        <a href="product-details.html">
-                                            <img src="{{('assets/images/product/product-1.jpg')}}" alt="">
-                                        </a>
-                                        <span class="pro-badge left bg-black">Out of stock</span>
-                                        <div class="product-action-wrap">
-                                            <div class="product-action-left">
-                                                <button><i class="icon-basket-loaded"></i>Add to Cart</button>
-                                            </div>
-                                            <div class="product-action-right tooltip-style">
-                                                <button data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="icon-size-fullscreen icons"></i><span>Quick View</span></button>
-                                                <button class="font-inc"><i class="icon-refresh"></i><span>Compare</span></button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="product-content-wrap">
-                                        <div class="product-content-left">
-                                            <h4><a href="product-details.html">Simple Black T-Shirt</a></h4>
-                                            <div class="product-price">
-                                                <span>$46.20</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-content-right tooltip-style">
-                                            <button class="font-inc"><i class="icon-heart"></i><span>Wishlist</span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="banner-area pb-85">
-            <div class="container">
-                <div class="section-title mb-45">
-                    <h2>Our Collections</h2>
-                </div>
-                <div class="row">
-                    <div class="col-lg-7 col-md-7">
-                        <div class="banner-wrap banner-mr-1 mb-30">
-                            <div class="banner-img banner-img-zoom">
-                                <a href="product-details.html"><img src="{{('assets/images/banner/banner-1.jpg')}}" alt=""></a>
-                            </div>
-                            <div class="banner-content-1">
-                                <h2>Zara Pattern Boxed <br>Underwear</h2>
-                                <p>Stretch, fresh-cool help you alway comfortable</p>
-                                <div class="btn-style-1">
-                                    <a class="animated btn-1-padding-2" href="product-details.html">Shop Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-5 col-md-5">
-                        <div class="banner-wrap  banner-ml-1 mb-30">
-                            <div class="banner-img banner-img-zoom">
-                                <a href="product-details.html"><img src="{{('assets/images/banner/banner-2.jpg')}}" alt=""></a>
-                            </div>
-                            <div class="banner-content-2">
-                                <h2>Basic Color Caps</h2>
-                                <p>Minimalist never cool, choose and make the simple great again!</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @yield('content')
         <div class="instagram-area">
             <div class="container">
                 <div class="section-title-tag-wrap mb-45">
@@ -1671,82 +536,28 @@
                     <div class="modal-body">
                         <div class="row">
                             <div class="col-lg-5 col-md-6 col-12 col-sm-12">
-                                <div class="tab-content quickview-big-img">
-                                    <div id="pro-1" class="tab-pane fade show active">
-                                        <img src="{{('assets/images/product/product-1.jpg')}}" alt="">
-                                    </div>
-                                    <div id="pro-2" class="tab-pane fade">
-                                        <img src="{{('assets/images/product/product-3.jpg')}}" alt="">
-                                    </div>
-                                    <div id="pro-3" class="tab-pane fade">
-                                        <img src="{{('assets/images/product/product-6.jpg')}}" alt="">
-                                    </div>
+                                <!-- Tempat gambar besar -->
+                                <div id="product-images" class="mb-3">
+                                    <!-- Gambar besar akan dimasukkan di sini oleh JavaScript -->
+                                    <img id="main-image" src="" alt="product image" class="img-fluid mb-3 w-100" />
                                 </div>
-                                <div class="quickview-wrap mt-15">
-                                    <div class="nav nav-style-6">
-                                        <button class="nav-link active" id="pro-1-tab" data-bs-toggle="tab" data-bs-target="#pro-1" type="button" role="tab"
-                                            aria-controls="pro-1" aria-selected="true">
-                                            <img src="{{('assets/images/product/quickview-s1.jpg')}}" alt="product-thumbnail">
-                                        </button>
-                                        <button class="nav-link" id="pro-2-tab" data-bs-toggle="tab" data-bs-target="#pro-2" type="button" role="tab"
-                                            aria-controls="pro-2" aria-selected="true">
-                                            <img src="{{('assets/images/product/quickview-s2.jpg')}}" alt="product-thumbnail">
-                                        </button>
-                                        <button class="nav-link" id="pro-3-tab" data-bs-toggle="tab" data-bs-target="#pro-3" type="button" role="tab"
-                                            aria-controls="pro-3" aria-selected="true">
-                                            <img src="{{('assets/images/product/quickview-s3.jpg')}}" alt="product-thumbnail">
-                                        </button>
-                                    </div>
+                                <div id="product-thumbnails" class="d-flex justify-content-start">
+                                    <!-- Thumbnails akan ditempatkan di sini oleh JavaScript -->
                                 </div>
                             </div>
                             <div class="col-lg-7 col-md-6 col-12 col-sm-12">
                                 <div class="product-details-content quickview-content">
-                                    <h2>Simple Black T-Shirt</h2>
-                                    <div class="product-ratting-review-wrap">
-                                        <div class="product-ratting-digit-wrap">
-                                            <div class="product-ratting">
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                                <i class="icon_star"></i>
-                                            </div>
-                                            <div class="product-digit">
-                                                <span>5.0</span>
-                                            </div>
-                                        </div>
-                                        <div class="product-review-order">
-                                            <span>62 Reviews</span>
-                                            <span>242 orders</span>
-                                        </div>
-                                    </div>
-                                    <p>Seamlessly predominate enterprise metrics without performance based process improvements.</p>
+                                    <h2 id="product-name"></h2>
+                                    <p id="product-description">Seamlessly predominate enterprise metrics without performance based process improvements.</p>
                                     <div class="pro-details-price">
-                                        <span class="new-price">$75.72</span>
-                                        <span class="old-price">$95.72</span>
+                                        <span class="new-price" id="product-price"></span>
+                                        <!-- <span class="old-price">$95.72</span> -->
                                     </div>
                                     <div class="pro-details-color-wrap">
                                         <span>Color:</span>
                                         <div class="pro-details-color-content">
-                                            <ul>
-                                                <li><a class="dolly" href="#">dolly</a></li>
-                                                <li><a class="white" href="#">white</a></li>
-                                                <li><a class="azalea" href="#">azalea</a></li>
-                                                <li><a class="peach-orange" href="#">Orange</a></li>
-                                                <li><a class="mona-lisa active" href="#">lisa</a></li>
-                                                <li><a class="cupid" href="#">cupid</a></li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                    <div class="pro-details-size">
-                                        <span>Size:</span>
-                                        <div class="pro-details-size-content">
-                                            <ul>
-                                                <li><a href="#">XS</a></li>
-                                                <li><a href="#">S</a></li>
-                                                <li><a href="#">M</a></li>
-                                                <li><a href="#">L</a></li>
-                                                <li><a href="#">XL</a></li>
+                                            <ul id="product-colors">
+                                                <!-- Warna produk akan ditambahkan oleh JavaScript -->
                                             </ul>
                                         </div>
                                     </div>
@@ -1758,24 +569,15 @@
                                     </div>
                                     <div class="product-details-meta">
                                         <ul>
-                                            <li><span>Categories:</span> <a href="#">Woman,</a> <a href="#">Dress,</a> <a href="#">T-Shirt</a></li>
-                                            <li><span>Tag: </span> <a href="#">Fashion,</a> <a href="#">Mentone</a> , <a href="#">Texas</a></li>
+                                            <li>
+                                                <span>Categories:</span>
+                                                <p id="product-categories"></p>
+                                            </li>
                                         </ul>
                                     </div>
                                     <div class="pro-details-action-wrap">
                                         <div class="pro-details-add-to-cart">
-                                            <a title="Add to Cart" href="#">Add To Cart </a>
-                                        </div>
-                                        <div class="pro-details-action">
-                                            <a title="Add to Wishlist" href="#"><i class="icon-heart"></i></a>
-                                            <a title="Add to Compare" href="#"><i class="icon-refresh"></i></a>
-                                            <a class="social" title="Social" href="#"><i class="icon-share"></i></a>
-                                            <div class="product-dec-social">
-                                                <a class="facebook" title="Facebook" href="#"><i class="icon-social-facebook"></i></a>
-                                                <a class="twitter" title="Twitter" href="#"><i class="icon-social-twitter"></i></a>
-                                                <a class="instagram" title="Instagram" href="#"><i class="icon-social-instagram"></i></a>
-                                                <a class="pinterest" title="Pinterest" href="#"><i class="icon-social-pinterest"></i></a>
-                                            </div>
+                                            <a title="Add to Cart" href="#">Buy Now </a>
                                         </div>
                                     </div>
                                 </div>
@@ -1791,8 +593,7 @@
     <!-- All JS is here
 ============================================ -->
 
-    <script src="{{('assets/js/vendor/modernizr-3.11.7.min.js')}}">
-    </script>
+    <script src="{{('assets/js/vendor/modernizr-3.11.7.min.js')}}"></script>
     <script src="{{('assets/js/vendor/jquery-v3.6.0.min.js')}}"></script>
     <script src="{{('assets/js/vendor/jquery-migrate-v3.3.2.min.js')}}"></script>
     <script src="{{('assets/js/vendor/popper.min.js')}}"></script>
@@ -1809,6 +610,105 @@
     <script src="{{('assets/js/plugins/ajax-mail.js')}}"></script>
     <!-- Main JS -->
     <script src="{{('assets/js/main.js')}}"></script>
+
+    <!-- JavaScript untuk AJAX -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            // Event handler untuk klik pada tab kategori
+            $('.tab-style-1 a').on('click', function(e) {
+                e.preventDefault();
+
+                // Hapus class 'active' dari semua tab dan tambahkan ke tab yang diklik
+                $('.tab-style-1 a').removeClass('active');
+                $(this).addClass('active');
+
+                var categoryId = $(this).data('category-id');
+
+                // AJAX request untuk memuat produk berdasarkan kategori
+                $.ajax({
+                    url: "{{ route('filter.products') }}",
+                    type: "GET",
+                    data: {
+                        category_id: categoryId
+                    },
+                    success: function(data) {
+                        $('#productContainer').html(data);
+                    },
+                    error: function() {
+                        $('#productContainer').html('<p>Terjadi kesalahan. Silakan coba lagi.</p>');
+                    }
+                });
+            });
+
+            // Event handler untuk klik pada tombol "Quick View"
+            $('.quick-view-btn').on('click', function() {
+                var productId = $(this).data('product-id');
+
+                // AJAX request untuk mendapatkan detail produk
+                $.ajax({
+                    url: '/product/' + productId,
+                    method: 'GET',
+                    success: function(data) {
+                        // Kosongkan konten sebelumnya
+                        $('#product-thumbnails').empty();
+                        $('#product-colors').empty();
+                        $('#product-categories').empty();
+
+                        // Menampilkan gambar pertama sebagai gambar utama
+                        var firstImage = data.images[0];
+                        $('#main-image').attr('src', '/storage/' + firstImage);
+
+                        // Tambahkan thumbnail untuk semua gambar
+                        data.images.forEach(function(image, index) {
+                            var isActive = (index === 0) ? 'border border-primary' : '';
+                            $('#product-thumbnails').append(`
+                            <img src="/storage/${image}" alt="product-thumbnail" class="img-thumbnail me-2 ${isActive}" style="width: 50px; cursor: pointer;" data-image="/storage/${image}">
+                        `);
+                        });
+
+                        // Event listener untuk mengganti gambar utama saat thumbnail diklik
+                        $('.img-thumbnail').on('click', function() {
+                            var newImage = $(this).data('image');
+                            $('#main-image').attr('src', newImage);
+                            $('.img-thumbnail').removeClass('border border-primary');
+                            $(this).addClass('border border-primary');
+                        });
+
+                        // Tampilkan warna produk
+                        if (data.color && data.color.length > 0) {
+                            data.color.forEach(function(color) {
+                                $('#product-colors').append('<li><a href="#" style="background-color: ' + color.hex_color + ';"></a></li>');
+                            });
+                        } else {
+                            $('#product-colors').append('<li>No colors available</li>');
+                        }
+
+                        // Tampilkan kategori produk
+                        if (data.categories && data.categories.length > 0) {
+                            data.categories.forEach(function(category) {
+                                $('#product-categories').append('<span class="badge bg-secondary me-1">' + category + '</span>');
+                            });
+                        } else {
+                            $('#product-categories').append('<p>No categories available</p>');
+                        }
+
+                        // Update konten lainnya
+                        $('#product-name').text(data.name);
+                        $('#product-price').text('Rp ' + data.formatted_price);
+                        $('#product-description').html(data.description);
+
+                        // Tampilkan modal
+                        $('#exampleModal').modal('show');
+                    },
+                    error: function() {
+                        alert('Terjadi kesalahan saat memuat data produk. Silakan coba lagi.');
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

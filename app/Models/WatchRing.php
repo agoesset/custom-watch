@@ -5,13 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class CustomProduct extends Model
+class WatchRing extends Model
 {
     use HasFactory;
+
     protected $fillable = [
         'name',
         'image',
-        'part',
-        'price',
+        'desc',
     ];
+
+    public function watchTypes()
+    {
+        return $this->belongsToMany(WatchType::class, 'watch_type_ring');
+    }
 }
