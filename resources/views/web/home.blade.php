@@ -2,44 +2,23 @@
 @section('title','Home - Customwatch.id')
 @section('content')
 <div class="slider-area bg-gray">
-    <div class="hero-slider-active-1 hero-slider-pt-1 nav-style-1 dot-style-1">
+    <div class="hero-slider-1 hero-slider-pt-1 nav-style-1 dot-style-1">
         <div class="single-hero-slider single-animation-wrap">
             <div class="container">
                 <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="hero-slider-content-1 hero-slider-content-1-pt-1 slider-animated-1">
-                            <h4 class="animated">What Will Be</h4>
-                            <h1 class="animated">Your Next <br>Watch?</h1>
-                            <p class="animated">Discover our collection with leather simple backpacks. Less is more never out trend.</p>
+                            <h4 class="animated">Tampil Keren dengan</h4>
+                            <h1 class="animated">Jam Tangan Custom Eksklusif!</h1>
+                            <p class="animated">Koleksi jam tangan kami dirancang khusus untuk mencerminkan gaya pribadi Anda. Pilih, sesuaikan, dan tampil beda.</p>
                             <div class="btn-style-1">
-                                <a class="animated btn-1-padding-1" href="product-details.html">Explore Now</a>
+                                <a class="animated btn-1-padding-1" href="product-details.html">Custom Jam Sekarang</a>
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-6">
                         <div class="hero-slider-img-1 slider-animated-1">
                             <img class="animated" src="{{('assets/images/hero.png')}}" alt="">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="single-hero-slider single-animation-wrap">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="hero-slider-content-1 hero-slider-content-1-pt-1 slider-animated-1">
-                            <h4 class="animated">New Arrivals</h4>
-                            <h1 class="animated">Leather Simple <br>Backpacks</h1>
-                            <p class="animated">Discover our collection with leather simple backpacks. Less is more never out trend.</p>
-                            <div class="btn-style-1">
-                                <a class="animated btn-1-padding-1" href="product-details.html">Explore Now</a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-6">
-                        <div class="hero-slider-img-1 slider-animated-1">
-                            <img class="animated" src="{{('assets/images/slider/hm-1-slider-1.png')}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -57,8 +36,8 @@
                             <i class="icon-cursor"></i>
                         </div>
                         <div class="service-content">
-                            <h3>Free Shipping</h3>
-                            <span>Orders over $100</span>
+                            <h3>Gratis Ongkir</h3>
+                            <span>Untuk pesanan diatas 1,5 Juta</span>
                         </div>
                     </div>
                 </div>
@@ -68,8 +47,8 @@
                             <i class="icon-reload"></i>
                         </div>
                         <div class="service-content">
-                            <h3>Free Returns</h3>
-                            <span>Within 30 days</span>
+                            <h3>Gratis Pengembalian</h3>
+                            <span>Dalam waktu 30 Hari</span>
                         </div>
                     </div>
                 </div>
@@ -79,8 +58,8 @@
                             <i class="icon-lock"></i>
                         </div>
                         <div class="service-content">
-                            <h3>100% Secure</h3>
-                            <span>Payment Online</span>
+                            <h3>100% Aman</h3>
+                            <span>Pembayaran Online</span>
                         </div>
                     </div>
                 </div>
@@ -90,8 +69,8 @@
                             <i class="icon-tag"></i>
                         </div>
                         <div class="service-content">
-                            <h3>Best Price</h3>
-                            <span>Guaranteed</span>
+                            <h3>Harga Terbaik</h3>
+                            <span>Sudah Terbukti</span>
                         </div>
                     </div>
                 </div>
@@ -105,15 +84,15 @@
             <div class="row">
                 <div class="col-lg-3 col-md-3">
                     <div class="about-us-logo">
-                        <img src="{{('assets/images/about/logo.png')}}" alt="logo">
+                        <img src="{{('assets/images/about/Customwatch.png')}}" alt="logo">
                     </div>
                 </div>
                 <div class="col-lg-9 col-md-9">
                     <div class="about-us-content">
-                        <h3>Introduce</h3>
-                        <p>Norda store is a business concept is to offer fashion and quality at the best price. It has since it was founded in 2022 grown into one of the best WooCommerce Fashion Theme. The content of this site is copyright-protected and is the property of David Moye Creative.</p>
+                        <h3>Tentang Kami</h3>
+                        <p>Custom Watch adalah sebuah bisnis yang berfokus pada penyediaan jam tangan custom berkualitas tinggi dengan desain yang modis dan harga yang kompetitif. Sejak didirikan pada tahun 2022, Custom Watch.id telah berkembang menjadi salah satu toko online terbaik yang menawarkan pilihan jam tangan yang dapat disesuaikan sesuai keinginan pelanggan.</p>
                         <div class="signature">
-                            <h2>David Moye</h2>
+                            <h2>Hadi</h2>
                         </div>
                     </div>
                 </div>
@@ -126,7 +105,7 @@
     <div class="container">
         <div class="section-title-tab-wrap mb-45">
             <div class="section-title">
-                <h2>Featured Products</h2>
+                <h2>Produk Kami</h2>
             </div>
             <div class="tab-style-1 nav">
                 <a class="active" href="#" data-category-id="">All Categories</a>
