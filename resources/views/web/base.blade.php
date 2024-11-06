@@ -9,22 +9,22 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
-    <link rel="shortcut icon" type="image/x-icon" href="{{('assets/images/favicon.png')}}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.png')}}">
 
     <!-- All CSS is here
 	============================================ -->
 
-    <link rel="stylesheet" href="{{('assets/css/vendor/bootstrap.min.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/vendor/simple-line-icons.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/vendor/elegant.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/vendor/linear-icon.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/nice-select.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/easyzoom.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/slick.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/animate.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/magnific-popup.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/plugins/jquery-ui.css')}}">
-    <link rel="stylesheet" href="{{('assets/css/style.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/vendor/bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/vendor/simple-line-icons.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/vendor/elegant.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/vendor/linear-icon.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/nice-select.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/easyzoom.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/slick.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/animate.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/magnific-popup.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/plugins/jquery-ui.css')}}">
+    <link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
     <style>
         .product-details-tab {
             position: relative;
@@ -96,7 +96,7 @@
                             <div class="col-xl-2 col-lg-2">
                                 <div class="logo">
                                     <a href="index.html">
-                                        <img src="{{('assets/images/logo/logo.png')}}" alt="logo">
+                                        <img src="{{asset('assets/images/logo/logo.png')}}" alt="logo">
                                     </a>
                                 </div>
                             </div>
@@ -152,7 +152,7 @@
                         <div class="col-5">
                             <div class="mobile-logo">
                                 <a href="index.html">
-                                    <img alt="" src="{{('assets/images/logo/logo.png')}}">
+                                    <img alt="" src="{{asset('assets/images/logo/logo.png')}}">
                                 </a>
                             </div>
                         </div>
@@ -187,7 +187,7 @@
                     <ul>
                         <li class="single-product-cart">
                             <div class="cart-img">
-                                <a href="#"><img src="{{('assets/images/cart/cart-1.jpg')}}" alt=""></a>
+                                <a href="#"><img src="{{asset('assets/images/cart/cart-1.jpg')}}" alt=""></a>
                             </div>
                             <div class="cart-title">
                                 <h4><a href="#">Simple Black T-Shirt</a></h4>
@@ -199,7 +199,7 @@
                         </li>
                         <li class="single-product-cart">
                             <div class="cart-img">
-                                <a href="#"><img src="{{('assets/images/cart/cart-2.jpg')}}" alt=""></a>
+                                <a href="#"><img src="{{asset('assets/images/cart/cart-2.jpg')}}" alt=""></a>
                             </div>
                             <div class="cart-title">
                                 <h4><a href="#">Norda Backpack</a></h4>
@@ -347,7 +347,9 @@
                 </div>
             </div>
         </div>
+
         @yield('content')
+
         <div class="instagram-area">
             <div class="container">
                 <div class="section-title-tag-wrap mb-45">
@@ -362,7 +364,7 @@
                     <div class="col">
                         <div class="instagram-item">
                             <a class="instagram-image" href="#">
-                                <img src="{{('assets/images/instagram/1.jpg')}}" alt="Instagram Image">
+                                <img src="{{asset('assets/images/instagram/1.jpg')}}" alt="Instagram Image">
                             </a>
                             <ul class="add-action">
                                 <li>
@@ -376,7 +378,7 @@
                     <div class="col">
                         <div class="instagram-item">
                             <a class="instagram-image" href="#">
-                                <img src="{{('assets/images/instagram/2.jpg')}}" alt="Instagram Image">
+                                <img src="{{asset('assets/images/instagram/2.jpg')}}" alt="Instagram Image">
                             </a>
                             <ul class="add-action">
                                 <li>
@@ -390,7 +392,7 @@
                     <div class="col">
                         <div class="instagram-item">
                             <a class="instagram-image" href="#">
-                                <img src="{{('assets/images/instagram/3.jpg')}}" alt="Instagram Image">
+                                <img src="{{asset('assets/images/instagram/3.jpg')}}" alt="Instagram Image">
                             </a>
                             <ul class="add-action">
                                 <li>
@@ -404,7 +406,7 @@
                     <div class="col">
                         <div class="instagram-item">
                             <a class="instagram-image" href="#">
-                                <img src="{{('assets/images/instagram/4.jpg')}}" alt="Instagram Image">
+                                <img src="{{asset('assets/images/instagram/4.jpg')}}" alt="Instagram Image">
                             </a>
                             <ul class="add-action">
                                 <li>
@@ -418,7 +420,7 @@
                     <div class="col">
                         <div class="instagram-item">
                             <a class="instagram-image" href="#">
-                                <img src="{{('assets/images/instagram/5.jpg')}}" alt="Instagram Image">
+                                <img src="{{asset('assets/images/instagram/5.jpg')}}" alt="Instagram Image">
                             </a>
                             <ul class="add-action">
                                 <li>
@@ -436,19 +438,19 @@
             <div class="container">
                 <div class="brand-logo-wrap brand-logo-mrg">
                     <div class="single-brand-logo mb-10">
-                        <img src="{{('assets/images/brand-logo/brand-logo-1.png')}}" alt="brand-logo">
+                        <img src="{{asset('assets/images/brand-logo/brand-logo-1.png')}}" alt="brand-logo">
                     </div>
                     <div class="single-brand-logo mb-10">
-                        <img src="{{('assets/images/brand-logo/brand-logo-2.png')}}" alt="brand-logo">
+                        <img src="{{asset('assets/images/brand-logo/brand-logo-2.png')}}" alt="brand-logo">
                     </div>
                     <div class="single-brand-logo mb-10">
-                        <img src="{{('assets/images/brand-logo/brand-logo-3.png')}}" alt="brand-logo">
+                        <img src="{{asset('assets/images/brand-logo/brand-logo-3.png')}}" alt="brand-logo">
                     </div>
                     <div class="single-brand-logo mb-10">
-                        <img src="{{('assets/images/brand-logo/brand-logo-4.png')}}" alt="brand-logo">
+                        <img src="{{asset('assets/images/brand-logo/brand-logo-4.png')}}" alt="brand-logo">
                     </div>
                     <div class="single-brand-logo mb-10">
-                        <img src="{{('assets/images/brand-logo/brand-logo-5.png')}}" alt="brand-logo">
+                        <img src="{{asset('assets/images/brand-logo/brand-logo-5.png')}}" alt="brand-logo">
                     </div>
                 </div>
             </div>
@@ -486,7 +488,7 @@
                     <div class="col-lg-6 col-md-6">
                         <div class="contact-info-wrap">
                             <div class="footer-logo">
-                                <a href="#"><img src="{{('assets/images/logo/logo.png')}}" alt="logo"></a>
+                                <a href="#"><img src="{{asset('assets/images/logo/logo.png')}}" alt="logo"></a>
                             </div>
                             <div class="single-contact-info">
                                 <span>Our Location</span>
@@ -577,7 +579,7 @@
                                     </div>
                                     <div class="pro-details-action-wrap">
                                         <div class="pro-details-add-to-cart">
-                                            <a title="Add to Cart" href="#">Buy Now </a>
+                                            <a id="buyNowModalButton" title="Buy Now" href="javascript:void(0)">Buy Now</a>
                                         </div>
                                     </div>
                                 </div>
@@ -593,23 +595,23 @@
     <!-- All JS is here
 ============================================ -->
 
-    <script src="{{('assets/js/vendor/modernizr-3.11.7.min.js')}}"></script>
-    <script src="{{('assets/js/vendor/jquery-v3.6.0.min.js')}}"></script>
-    <script src="{{('assets/js/vendor/jquery-migrate-v3.3.2.min.js')}}"></script>
-    <script src="{{('assets/js/vendor/popper.min.js')}}"></script>
-    <script src="{{('assets/js/vendor/bootstrap.min.js')}}"></script>
-    <script src="{{('assets/js/plugins/slick.js')}}"></script>
-    <script src="{{('assets/js/plugins/jquery.syotimer.min.js')}}"></script>
-    <script src="{{('assets/js/plugins/jquery.nice-select.min.js')}}"></script>
-    <script src="{{('assets/js/plugins/wow.js')}}"></script>
-    <script src="{{('assets/js/plugins/jquery-ui.js')}}"></script>
-    <script src="{{('assets/js/plugins/magnific-popup.js')}}"></script>
-    <script src="{{('assets/js/plugins/sticky-sidebar.js')}}"></script>
-    <script src="{{('assets/js/plugins/easyzoom.js')}}"></script>
-    <script src="{{('assets/js/plugins/scrollup.js')}}"></script>
-    <script src="{{('assets/js/plugins/ajax-mail.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/modernizr-3.11.7.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jquery-v3.6.0.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/jquery-migrate-v3.3.2.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/popper.min.js')}}"></script>
+    <script src="{{asset('assets/js/vendor/bootstrap.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/slick.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/jquery.syotimer.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/jquery.nice-select.min.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/wow.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/jquery-ui.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/magnific-popup.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/sticky-sidebar.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/easyzoom.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/scrollup.js')}}"></script>
+    <script src="{{asset('assets/js/plugins/ajax-mail.js')}}"></script>
     <!-- Main JS -->
-    <script src="{{('assets/js/main.js')}}"></script>
+    <script src="{{asset('assets/js/main.js')}}"></script>
 
     <!-- JavaScript untuk AJAX -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -707,6 +709,42 @@
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Tombol Buy Now di modal
+            const buyNowModalButton = document.getElementById('buyNowModalButton');
+            const qtyInputModal = document.querySelector('.modal .cart-plus-minus-box');
+            const productNameModal = document.getElementById('product-name');
+            const productPriceModal = document.getElementById('product-price');
+            const colorListModal = document.querySelectorAll('#product-colors li a');
+
+            if (buyNowModalButton) {
+                buyNowModalButton.addEventListener('click', function() {
+                    const productName = productNameModal.textContent.trim();
+                    const productPrice = parseFloat(productPriceModal.textContent.replace('Rp ', '').replace('.', '').replace(',', ''));
+                    const qty = parseInt(qtyInputModal.value);
+                    let selectedColor = 'Belum memilih warna';
+
+                    colorListModal.forEach(colorElement => {
+                        if (colorElement.classList.contains('active')) {
+                            selectedColor = colorElement.style.backgroundColor;
+                        }
+                    });
+
+                    const totalPrice = productPrice * qty;
+                    const message = `Halo, saya tertarik membeli produk berikut:\n\n` +
+                        `Nama Produk: ${productName}\n` +
+                        `Jumlah: ${qty}\n` +
+                        `Harga Total: Rp ${totalPrice.toLocaleString('id-ID')}\n` +
+                        `Warna: ${selectedColor}`;
+
+                    const whatsappUrl = `https://wa.me/6285101578882?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                });
+            }
         });
     </script>
 

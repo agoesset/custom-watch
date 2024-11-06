@@ -65,10 +65,25 @@ class HomeController extends Controller
         ]);
     }
 
+    public function showProductDetail($id)
+    {
+        // Ambil produk berdasarkan ID
+        $product = Product::with('categories')->findOrFail($id);
+
+        // Ambil produk terkait berdasarkan kategori
+        $relatedProducts = Product::whereHas('categories', function ($query) use ($product) {
+            $query->whereIn('category_id', $product->categories->pluck('id'));
+        })
+            ->where('id', '!=', $product->id) // Tidak termasuk produk yang sedang dilihat
+            ->take(4) // Batasi jumlah produk terkait (misalnya 4)
+            ->get();
+
+        // Kirim data ke view
+        return view('web.detail', compact('product', 'relatedProducts'));
+    }
+
     public function configurator()
     {
-
-
         // Mengirim data ke view
         return view('web.configurator', compact('cases', 'dials', 'crowns', 'bezels', 'rings', 'hands', 'secondHands', 'rubbers'));
     }
@@ -80,17 +95,14 @@ class HomeController extends Controller
         return view('web.shop', compact('allProduct'));
     }
 
-    // public function history()
-    // {
-    //     $strings = FrontString::all();
-    //     // dd($strings);
-    //     return view('web.history', compact('strings'));
-    // }
+    public function history()
+    {
 
-    // public function contact()
-    // {
-    //     $allProduct = Product::all();
-    //     // dd($allProduct);
-    //     return view('web.contact', compact('allProduct'));
-    // }
+        return view('web.history');
+    }
+
+    public function contact()
+    {
+        return view('web.contact');
+    }
 }

@@ -3,7 +3,7 @@
     <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 col-12">
         <div class="single-product-wrap mb-35">
             <div class="product-img product-img-zoom mb-20">
-                <a href="{{ route('product.show', $product->id) }}">
+                <a href="{{ route('product.detail', $product->id) }}">
                     <img src="{{ asset('storage/' . $product->image[0]) }}" alt="{{ $product->name }}">
                 </a>
                 <div class="product-action-wrap">
@@ -19,7 +19,7 @@
             </div>
             <div class="product-content-wrap">
                 <div class="product-content-left">
-                    <h4><a href="{{ route('product.show', $product->id) }}">{{ $product->name }}</a></h4>
+                    <h4><a href="{{ route('product.detail', $product->id) }}">{{ $product->name }}</a></h4>
                     <div class="product-price">
                         <span>{{ $product->formatted_price }}</span>
                     </div>
