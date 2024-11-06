@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('watch_type_strap', function (Blueprint $table) {
+        Schema::create('watch_strap_watch_type', function (Blueprint $table) {
             $table->id();
             $table->foreignId('watch_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('strap_id')->constrained('watch_straps')->onDelete('cascade');
+            $table->foreignId('watch_strap_id')->constrained('watch_straps')->onDelete('cascade');
             $table->timestamps();
         });
     }

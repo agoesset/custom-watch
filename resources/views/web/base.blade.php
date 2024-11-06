@@ -81,6 +81,17 @@
         .selected-case {
             border: 2px solid #000;
         }
+
+        .part-item {
+            cursor: pointer;
+        }
+
+        .part-item.active {
+            border: 2px solid #007bff;
+            /* Ganti dengan warna atau gaya yang diinginkan */
+            background-color: #f0f8ff;
+            /* Ganti dengan warna atau gaya yang diinginkan */
+        }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>

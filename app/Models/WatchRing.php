@@ -17,6 +17,6 @@ class WatchRing extends Model
 
     public function watchTypes()
     {
-        return $this->belongsToMany(WatchType::class, 'watch_type_ring');
+        return $this->belongsToMany(WatchType::class);
     }
 }

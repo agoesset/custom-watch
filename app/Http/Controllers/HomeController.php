@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\WatchType;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -84,8 +85,26 @@ class HomeController extends Controller
 
     public function configurator()
     {
-        // Mengirim data ke view
-        return view('web.configurator', compact('cases', 'dials', 'crowns', 'bezels', 'rings', 'hands', 'secondHands', 'rubbers'));
+        // Ambil tipe jam pertama yang tersedia dengan parts terkait
+        $watchType = WatchType::with(['watchCases', 'watchDials', 'watchRings', 'watchStraps'])
+            ->firstOrFail(); // Ambil tipe pertama atau sesuaikan dengan kebutuhan
+
+        return view('web.configurator', [
+            'watchType' => $watchType,
+            'cases' => $watchType->watchCases,
+            'dials' => $watchType->watchDials,
+            'rings' => $watchType->watchRings,
+            'straps' => $watchType->watchStraps,
+        ]);
+    }
+
+    public function loadParts(Request $request, $typeId)
+    {
+        // Mendapatkan data berdasarkan tipe yang dipilih
+        $watchType = WatchType::with(['watchCases', 'watchDials', 'watchRings', 'watchStraps'])
+            ->findOrFail($typeId);
+
+        return response()->json($watchType);
     }
 
     public function shop()

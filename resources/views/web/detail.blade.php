@@ -20,7 +20,7 @@
                     @endforeach
                 </div>
             </div>
-            <div class="col-lg-6 col-md-6">
+            <!-- <div class="col-lg-6 col-md-6">
                 <div class="product-details-content pro-details-content-mrg">
                     <h2>{{ $product->name }}</h2>
                     <p class="mt-2">{!! $product->description !!}</p>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 

@@ -3,15 +3,16 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\WatchCaseResource\Pages;
-use App\Filament\Resources\WatchCaseResource\RelationManagers;
 use App\Models\WatchCase;
-use Filament\Forms;
+use App\Models\WatchType;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class WatchCaseResource extends Resource
 {
@@ -23,16 +24,22 @@ class WatchCaseResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Select::make('watchTypes')
+                    ->relationship('watchTypes', 'name')
+                    ->label('Watch Types')
+                    ->required(),
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
-                    ->image()
-                    ->required(),
-                Forms\Components\Textarea::make('desc')
+                Textarea::make('desc')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
+                FileUpload::make('image')
+                    ->image()
+                    ->directory('cases/images')
+                    ->maxSize(2048)
+                    ->required(),
             ]);
     }
 

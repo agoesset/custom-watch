@@ -6,6 +6,10 @@ use App\Filament\Resources\WatchDialResource\Pages;
 use App\Filament\Resources\WatchDialResource\RelationManagers;
 use App\Models\WatchDial;
 use Filament\Forms;
+use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Select;
+use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -23,13 +27,19 @@ class WatchDialResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('name')
+                Select::make('watchTypes')
+                    ->relationship('watchTypes', 'name')
+                    ->label('Watch Types')
+                    ->required(),
+                TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\FileUpload::make('image')
+                FileUpload::make('image')
                     ->image()
+                    ->directory('dials/images')
+                    ->maxSize(2048)
                     ->required(),
-                Forms\Components\Textarea::make('desc')
+                Textarea::make('desc')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),

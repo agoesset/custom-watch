@@ -9,14 +9,10 @@ class WatchCase extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'name',
-        'image',
-        'desc',
-    ];
+    protected $fillable = ['name', 'image', 'desc'];
 
     public function watchTypes()
     {
-        return $this->belongsToMany(WatchType::class, 'watch_type_case');
+        return $this->belongsToMany(WatchType::class);
     }
 }

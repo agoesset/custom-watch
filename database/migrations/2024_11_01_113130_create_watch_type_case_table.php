@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('watch_type_case', function (Blueprint $table) {
+        Schema::create('watch_case_watch_type', function (Blueprint $table) {
             $table->id();
             $table->foreignId('watch_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('case_id')->constrained('watch_cases')->onDelete('cascade');
+            $table->foreignId('watch_case_id')->constrained('watch_cases')->onDelete('cascade');
             $table->timestamps();
         });
     }

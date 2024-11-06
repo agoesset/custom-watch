@@ -16,6 +16,6 @@ class WatchStrap extends Model
 
     public function watchTypes()
     {
-        return $this->belongsToMany(WatchType::class, 'watch_type_strap');
+        return $this->belongsToMany(WatchType::class);
     }
 }

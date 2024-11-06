@@ -15,21 +15,21 @@ class WatchType extends Model
 
     public function watchCases()
     {
-        return $this->belongsToMany(WatchCase::class, 'watch_type_case');
+        return $this->belongsToMany(WatchCase::class);
     }
 
     public function watchDials()
     {
-        return $this->belongsToMany(WatchDial::class, 'watch_type_dial');
+        return $this->belongsToMany(WatchDial::class);
     }
 
     public function watchRings()
     {
-        return $this->belongsToMany(WatchRing::class, 'watch_type_ring');
+        return $this->belongsToMany(WatchRing::class);
     }
 
     public function watchStraps()
     {
-        return $this->belongsToMany(WatchStrap::class, 'watch_type_strap');
+        return $this->belongsToMany(WatchStrap::class);
     }
 }
