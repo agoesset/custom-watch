@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\WatchCase;
 use App\Models\WatchType;
 use Illuminate\Http\Request;
 
@@ -85,26 +86,37 @@ class HomeController extends Controller
 
     public function configurator()
     {
-        // Ambil tipe jam pertama yang tersedia dengan parts terkait
-        $watchType = WatchType::with(['watchCases', 'watchDials', 'watchRings', 'watchStraps'])
-            ->firstOrFail(); // Ambil tipe pertama atau sesuaikan dengan kebutuhan
+        // Ambil semua cases tanpa filter tipe
+        // $allCases = WatchCase::all();
+        $allCases = WatchCase::with('watchTypes')->get();
+
+
+        // Ambil tipe jam pertama untuk menampilkan parts terkait
+        $watchType = WatchType::with(['watchDials', 'watchRings', 'watchStraps'])
+            ->firstOrFail(); // Sesuaikan ini dengan logika default Anda
+
+        // dd($allCases);
 
         return view('web.configurator', [
+            'allCases' => $allCases,
             'watchType' => $watchType,
-            'cases' => $watchType->watchCases,
             'dials' => $watchType->watchDials,
             'rings' => $watchType->watchRings,
             'straps' => $watchType->watchStraps,
         ]);
     }
 
-    public function loadParts(Request $request, $typeId)
+    public function loadParts($typeId)
     {
-        // Mendapatkan data berdasarkan tipe yang dipilih
-        $watchType = WatchType::with(['watchCases', 'watchDials', 'watchRings', 'watchStraps'])
+        $watchType = WatchType::with(['watchDials', 'watchRings', 'watchStraps'])
             ->findOrFail($typeId);
 
-        return response()->json($watchType);
+
+        return response()->json([
+            'dials' => $watchType->watchDials,
+            'rings' => $watchType->watchRings,
+            'straps' => $watchType->watchStraps,
+        ]);
     }
 
     public function shop()

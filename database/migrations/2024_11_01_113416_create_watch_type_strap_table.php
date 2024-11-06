@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('watch_strap_watch_type', function (Blueprint $table) {
             $table->id();
             $table->foreignId('watch_type_id')->constrained()->onDelete('cascade');
-            $table->foreignId('watch_strap_id')->constrained('watch_straps')->onDelete('cascade');
+            $table->foreignId('watch_strap_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

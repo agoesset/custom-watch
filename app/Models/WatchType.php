@@ -15,7 +15,7 @@ class WatchType extends Model
 
     public function watchCases()
     {
-        return $this->belongsToMany(WatchCase::class);
+        return $this->belongsToMany(WatchCase::class, 'watch_case_watch_type');
     }
 
     public function watchDials()

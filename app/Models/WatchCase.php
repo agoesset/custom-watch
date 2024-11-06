@@ -13,6 +13,6 @@ class WatchCase extends Model
 
     public function watchTypes()
     {
-        return $this->belongsToMany(WatchType::class);
+        return $this->belongsToMany(WatchType::class, 'watch_case_watch_type');
     }
 }
