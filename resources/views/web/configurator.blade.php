@@ -8,33 +8,39 @@
             <!-- Bagian Kiri: Preview Jam -->
             <div class="col-lg-6 col-md-6">
                 <div class="product-details-tab" id="previewContainer">
-                    <!-- Layer Preview untuk masing-masing Part -->
-                    @if($allCases->isNotEmpty())
+                    <!-- Layer paling bawah: Strap -->
+                    @if($straps->isNotEmpty())
                     <div class="layer layer1">
-                        <img src="{{ asset('storage/' . $allCases->first()->image) }}" id="preview-case" alt="Case Layer">
+                        <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="Strap Layer">
                     </div>
                     @endif
+
+                    <!-- Setelah itu: Dial -->
                     @if($dials->isNotEmpty())
                     <div class="layer layer2">
                         <img src="{{ asset('storage/' . $dials->first()->image) }}" id="preview-dial" alt="Dial Layer">
                     </div>
                     @endif
-                    @if($rings->isNotEmpty())
+
+                    <!-- Setelah itu: Case -->
+                    @if($allCases->isNotEmpty())
                     <div class="layer layer3">
+                        <img src="{{ asset('storage/' . $allCases->first()->image) }}" id="preview-case" alt="Case Layer">
+                    </div>
+                    @endif
+
+                    <!-- Layer paling atas: Ring -->
+                    @if($rings->isNotEmpty())
+                    <div class="layer layer4">
                         <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="Ring Layer">
                     </div>
                     @endif
-                    @if($straps->isNotEmpty())
-                    <div class="layer layer4">
-                        <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="Strap Layer">
-                    </div>
-                    @endif
                 </div>
+
             </div>
 
             <!-- Bagian Kanan: Tab untuk Memilih Part -->
             <div class="col-lg-6 col-md-6">
-                <!-- Navigasi Tab -->
                 <div class="dec-review-topbar nav mb-45">
                     @if($allCases->isNotEmpty())
                     <a class="active" data-bs-toggle="tab" href="#cases-tab">Cases</a>
@@ -73,170 +79,117 @@
                     </div>
                     @endif
 
-                    <!-- Tab untuk Dials -->
-                    @if($dials->isNotEmpty())
+                    <!-- Tab untuk Dials, Rings, Straps -->
                     <div id="dials-tab" class="tab-pane">
-                        <div class="row" id="dialsList">
-                            @foreach($dials as $dial)
-                            <div class="col-md-3 mb-3">
-                                <div class="card part-item" data-type="dials" data-image="{{ asset('storage/' . $dial->image) }}">
-                                    <div class="card-body text-center">
-                                        <img src="{{ asset('storage/' . $dial->image) }}" alt="{{ $dial->name }}" class="img-fluid mb-2" style="max-width: 80px;">
-                                        <li class="list-unstyled mt-2">{{ $dial->name }}</li>
-                                    </div>
-                                </div>
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
+                        <div class="row" id="dialsList"></div>
+                    </div>
 
-                        <!-- Tab untuk Rings -->
-                        @if($rings->isNotEmpty())
-                        <div id="rings-tab" class="tab-pane">
-                            <div class="row" id="ringsList">
-                                @foreach($allCases as $case)
-                                @foreach($case->watchTypes as $watchType)
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
-                                        <div class="card-body text-center">
-                                            <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">{{ $case->name }}</li>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach
-                                @endforeach
-                            </div>
-                        </div>
-                        @endif
+                    <div id="rings-tab" class="tab-pane">
+                        <div class="row" id="ringsList"></div>
+                    </div>
 
-                        <!-- Tab untuk Straps -->
-                        @if($straps->isNotEmpty())
-                        <div id="straps-tab" class="tab-pane">
-                            <div class="row" id="strapsList">
-                                @foreach($straps as $strap)
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="straps" data-image="{{ asset('storage/' . $strap->image) }}">
-                                        <div class="card-body text-center">
-                                            <img src="{{ asset('storage/' . $strap->image) }}" alt="{{ $strap->name }}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">{{ $strap->name }}</li>
-                                        </div>
-                                    </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                            @endif
-                        </div>
+                    <div id="straps-tab" class="tab-pane">
+                        <div class="row" id="strapsList"></div>
                     </div>
                 </div>
             </div>
         </div>
 
         <script>
-            function attachPartItemClickEvents() {
-                document.querySelectorAll('.part-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        const type = this.getAttribute('data-type');
-                        const image = this.getAttribute('data-image');
-
-                        // Hapus kelas 'active' dari semua .part-item dan tambahkan ke item yang diklik
-                        document.querySelectorAll('.part-item').forEach(part => {
-                            part.classList.remove('active');
-                        });
-                        this.classList.add('active');
-
-                        // Update gambar preview berdasarkan tipe
-                        if (type === 'cases' && document.getElementById('preview-case')) {
-                            document.getElementById('preview-case').src = image;
-                        } else if (type === 'dials' && document.getElementById('preview-dial')) {
-                            document.getElementById('preview-dial').src = image;
-                        } else if (type === 'rings' && document.getElementById('preview-ring')) {
-                            document.getElementById('preview-ring').src = image;
-                        } else if (type === 'straps' && document.getElementById('preview-strap')) {
-                            document.getElementById('preview-strap').src = image;
-                        }
-                    });
-                });
-            }
-
             document.addEventListener('DOMContentLoaded', function() {
-                attachPartItemClickEvents(); // Pasang event listener saat halaman pertama dimuat
+                function attachPartItemClickEvents() {
+                    document.querySelectorAll('.part-item').forEach(item => {
+                        item.addEventListener('click', function() {
+                            const type = this.getAttribute('data-type');
+                            const image = this.getAttribute('data-image');
 
-                document.querySelectorAll('.part-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        const watchTypeId = this.getAttribute('data-watch-type-id');
+                            document.querySelectorAll('.part-item').forEach(part => {
+                                part.classList.remove('active');
+                            });
+                            this.classList.add('active');
 
-                        if (!watchTypeId) {
-                            console.error('watchTypeId is missing');
-                            return;
-                        }
+                            // Update gambar preview berdasarkan tipe
+                            if (type === 'cases') {
+                                document.getElementById('preview-case').src = image;
+                            } else if (type === 'dials') {
+                                document.getElementById('preview-dial').src = image;
+                            } else if (type === 'rings') {
+                                document.getElementById('preview-ring').src = image;
+                            } else if (type === 'straps') {
+                                document.getElementById('preview-strap').src = image;
+                            }
 
-                        console.log(`Fetching data from: /configurator/load-parts/${watchTypeId}`);
-                        fetch(`/configurator/load-parts/${watchTypeId}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Data yang diterima:', data); // Debug data respons
-
-                                // Update elemen di tab Dials
-                                const dialsList = document.getElementById('dialsList');
-                                if (dialsList) {
-                                    dialsList.innerHTML = '';
-                                    data.dials.forEach(dial => {
-                                        dialsList.innerHTML += `
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="dials" data-image="/storage/${dial.image}">
-                                        <div class="card-body text-center">
-                                            <img src="/storage/${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">${dial.name}</li>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                                    });
-                                }
-
-                                // Update elemen di tab Rings
-                                const ringsList = document.getElementById('ringsList');
-                                if (ringsList) {
-                                    ringsList.innerHTML = '';
-                                    data.rings.forEach(ring => {
-                                        ringsList.innerHTML += `
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="rings" data-image="/storage/${ring.image}">
-                                        <div class="card-body text-center">
-                                            <img src="/storage/${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">${ring.name}</li>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                                    });
-                                }
-
-                                // Update elemen di tab Straps
-                                const strapsList = document.getElementById('strapsList');
-                                if (strapsList) {
-                                    strapsList.innerHTML = '';
-                                    data.straps.forEach(strap => {
-                                        strapsList.innerHTML += `
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="straps" data-image="/storage/${strap.image}">
-                                        <div class="card-body text-center">
-                                            <img src="/storage/${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">${strap.name}</li>
-                                        </div>
-                                    </div>
-                                </div>
-                            `;
-                                    });
-                                }
-
-                                // Pasang ulang event listener pada elemen baru
-                                attachPartItemClickEvents();
-                            })
-                            .catch(error => console.error('Error loading parts:', error));
+                            const watchTypeId = this.getAttribute('data-watch-type-id');
+                            if (watchTypeId) {
+                                loadParts(watchTypeId);
+                            }
+                        });
                     });
-                });
+                }
+
+                function loadParts(watchTypeId) {
+                    fetch(`/configurator/load-parts/${watchTypeId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            // Update dials
+                            const dialsList = document.getElementById('dialsList');
+                            dialsList.innerHTML = '';
+                            data.dials.forEach(dial => {
+                                dialsList.innerHTML += `
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card part-item" data-type="dials" data-image="/storage/${dial.image}">
+                                            <div class="card-body text-center">
+                                                <img src="/storage/${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <li class="list-unstyled mt-2">${dial.name}</li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+
+                            // Update rings
+                            const ringsList = document.getElementById('ringsList');
+                            ringsList.innerHTML = '';
+                            data.rings.forEach(ring => {
+                                ringsList.innerHTML += `
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card part-item" data-type="rings" data-image="/storage/${ring.image}">
+                                            <div class="card-body text-center">
+                                                <img src="/storage/${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <li class="list-unstyled mt-2">${ring.name}</li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+
+                            // Update straps
+                            const strapsList = document.getElementById('strapsList');
+                            strapsList.innerHTML = '';
+                            data.straps.forEach(strap => {
+                                strapsList.innerHTML += `
+                                    <div class="col-md-3 mb-3">
+                                        <div class="card part-item" data-type="straps" data-image="/storage/${strap.image}">
+                                            <div class="card-body text-center">
+                                                <img src="/storage/${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <li class="list-unstyled mt-2">${strap.name}</li>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            });
+
+                            attachPartItemClickEvents();
+                        })
+                        .catch(error => {
+                            console.error('Error loading parts:', error);
+                        });
+                }
+
+                attachPartItemClickEvents();
             });
         </script>
-        @endsection
+    </div>
+</div>
+
+@endsection

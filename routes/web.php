@@ -23,7 +23,7 @@ Route::get('/filter-products', [HomeController::class, 'filterProducts'])->name(
 Route::get('/product/{id}', [HomeController::class, 'show'])->name('product.show');
 Route::get('/product/{id}/detail', [HomeController::class, 'showProductDetail'])->name('product.detail');
 Route::get('/configurator', [HomeController::class, 'configurator'])->name('configurator');
-Route::get('/configurator/load-parts/{typeId}', [HomeController::class, 'loadParts'])->name('configurator.load');
+Route::get('/configurator/load-parts/{watchTypeId}', [HomeController::class, 'loadParts'])->name('configurator.load');
 
 Route::get('/shop', [HomeController::class, 'shop'])->name('shop');
 Route::get('/history', [HomeController::class, 'history'])->name('history');

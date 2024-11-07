@@ -106,17 +106,23 @@ class HomeController extends Controller
         ]);
     }
 
-    public function loadParts($typeId)
+    public function loadParts($watchTypeId)
     {
-        $watchType = WatchType::with(['watchDials', 'watchRings', 'watchStraps'])
-            ->findOrFail($typeId);
+        try {
+            $watchType = WatchType::with(['watchDials', 'watchRings', 'watchStraps'])->findOrFail($watchTypeId);
 
-
-        return response()->json([
-            'dials' => $watchType->watchDials,
-            'rings' => $watchType->watchRings,
-            'straps' => $watchType->watchStraps,
-        ]);
+            // Pastikan return JSON yang valid
+            return response()->json([
+                'dials' => $watchType->watchDials,
+                'rings' => $watchType->watchRings,
+                'straps' => $watchType->watchStraps,
+            ]);
+        } catch (\Exception $e) {
+            // Tangani error, kirimkan status 500 dengan pesan error
+            return response()->json([
+                'error' => 'Failed to load parts. ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function shop()

@@ -60,22 +60,22 @@
         /* Layer dengan z-index untuk menumpuk sesuai urutan */
         .layer1 {
             z-index: 1;
+            /* Layer paling bawah: Strap */
         }
 
         .layer2 {
             z-index: 2;
+            /* Setelah itu: Dial */
         }
 
         .layer3 {
             z-index: 3;
+            /* Setelah itu: Case */
         }
 
         .layer4 {
             z-index: 4;
-        }
-
-        .layer5 {
-            z-index: 5;
+            /* Layer paling atas: Ring */
         }
 
         .selected-case {
