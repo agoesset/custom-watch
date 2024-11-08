@@ -11,7 +11,7 @@
                     <li>
                         <a href="index.html">Home</a>
                     </li>
-                    <li class="active">Kustom Jam </li>
+                    <li class="active">{{ $product->name }} </li>
                 </ul>
             </div>
         </div>
@@ -33,50 +33,50 @@
                         @endforeach
                     </div>
                 </div>
-                <!-- <div class="col-lg-6 col-md-6">
-                <div class="product-details-content pro-details-content-mrg">
-                    <h2>{{ $product->name }}</h2>
-                    <p class="mt-2">{!! $product->description !!}</p>
-                    <div class="pro-details-price">
-                        <span class="new-price">{{ $product->formatted_price }}</span>
-                    </div>
-                    <div class="pro-details-color-wrap">
-                        <span>Color:</span>
-                        <div class="pro-details-color-content">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product-details-content pro-details-content-mrg">
+                        <h2>{{ $product->name }}</h2>
+                        <p class="mt-2">{!! $product->description !!}</p>
+                        <div class="pro-details-price">
+                            <span class="new-price">{{ $product->formatted_price }}</span>
+                        </div>
+                        <div class="pro-details-color-wrap">
+                            <span>Color:</span>
+                            <div class="pro-details-color-content">
+                                <ul>
+                                    @if (is_array($product->color) && count($product->color) > 0)
+                                    @foreach ($product->color as $color)
+                                    <li><a href="#" style="background-color: {{ $color['hex_color'] }};"></a></li>
+                                    @endforeach
+                                    @else
+                                    <li><span>No colors available</span></li>
+                                    @endif
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="pro-details-quality">
+                            <span>Quantity:</span>
+                            <div class="cart-plus-minus">
+                                <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
+                            </div>
+                        </div>
+                        <div class="product-details-meta">
                             <ul>
-                                @if (is_array($product->color) && count($product->color) > 0)
-                                @foreach ($product->color as $color)
-                                <li><a href="#" style="background-color: {{ $color['hex_color'] }};"></a></li>
-                                @endforeach
-                                @else
-                                <li><span>No colors available</span></li>
-                                @endif
+                                <li>
+                                    <span>Categories:</span>
+                                    @foreach($product->categories as $category)
+                                    <a href="#" class="badge bg-secondary me-1">{{ $category->name }}</a>
+                                    @endforeach
+                                </li>
                             </ul>
                         </div>
-                    </div>
-                    <div class="pro-details-quality">
-                        <span>Quantity:</span>
-                        <div class="cart-plus-minus">
-                            <input class="cart-plus-minus-box" type="text" name="qtybutton" value="1">
-                        </div>
-                    </div>
-                    <div class="product-details-meta">
-                        <ul>
-                            <li>
-                                <span>Categories:</span>
-                                @foreach($product->categories as $category)
-                                <a href="#" class="badge bg-secondary me-1">{{ $category->name }}</a>
-                                @endforeach
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="pro-details-action-wrap">
-                        <div class="pro-details-add-to-cart">
-                            <a id="buyNowDetailButton" title="Buy Now" href="javascript:void(0)">Buy Now</a>
+                        <div class="pro-details-action-wrap">
+                            <div class="pro-details-add-to-cart">
+                                <a id="buyNowDetailButton" title="Buy Now" href="javascript:void(0)">Buy Now</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
             </div>
         </div>
     </div>
