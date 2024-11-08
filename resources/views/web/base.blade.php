@@ -78,11 +78,11 @@
             /* Layer paling atas: Ring */
         }
 
-        .selected-case {
+        .selected-case {                                                                                
             border: 2px solid #000;
         }
 
-        .part-item {
+        .part-item {   
             cursor: pointer;
         }
 
