@@ -3,24 +3,37 @@
 @section('title', $product->name . ' - Customwatch.id')
 
 @section('content')
-<div class="product-details-area pt-120 pb-115">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-6 col-md-6">
-                <div class="product-details-tab">
-                    <!-- Gambar Besar -->
-                    <div id="product-images" class="mb-3">
-                        <img id="main-image" src="{{ asset('storage/' . ($product->image[0] ?? 'assets/images/no-image.png')) }}" alt="{{ $product->name }}" class="img-fluid mb-3 w-100">
+<div class="mt-100">
+    <div class="breadcrumb-area bg-gray">
+        <div class="container">
+            <div class="breadcrumb-content text-center">
+                <ul>
+                    <li>
+                        <a href="index.html">Home</a>
+                    </li>
+                    <li class="active">Kustom Jam </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="product-details-area pt-120 pb-115">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-md-6">
+                    <div class="product-details-tab">
+                        <!-- Gambar Besar -->
+                        <div id="product-images" class="mb-3">
+                            <img id="main-image" src="{{ asset('storage/' . ($product->image[0] ?? 'assets/images/no-image.png')) }}" alt="{{ $product->name }}" class="img-fluid mb-3 w-100">
+                        </div>
+                    </div>
+                    <!-- Thumbnail -->
+                    <div id="product-thumbnails" class="d-flex justify-content-center">
+                        @foreach ($product->image as $index => $image)
+                        <img src="{{ asset('storage/' . $image) }}" alt="product-thumbnail" class="img-thumbnail me-2 {{ $index === 0 ? 'border border-primary' : '' }}" style="width: 60px; cursor: pointer;" data-image="{{ asset('storage/' . $image) }}">
+                        @endforeach
                     </div>
                 </div>
-                <!-- Thumbnail -->
-                <div id="product-thumbnails" class="d-flex justify-content-center">
-                    @foreach ($product->image as $index => $image)
-                    <img src="{{ asset('storage/' . $image) }}" alt="product-thumbnail" class="img-thumbnail me-2 {{ $index === 0 ? 'border border-primary' : '' }}" style="width: 60px; cursor: pointer;" data-image="{{ asset('storage/' . $image) }}">
-                    @endforeach
-                </div>
-            </div>
-            <!-- <div class="col-lg-6 col-md-6">
+                <!-- <div class="col-lg-6 col-md-6">
                 <div class="product-details-content pro-details-content-mrg">
                     <h2>{{ $product->name }}</h2>
                     <p class="mt-2">{!! $product->description !!}</p>
@@ -64,6 +77,7 @@
                     </div>
                 </div>
             </div> -->
+            </div>
         </div>
     </div>
 
