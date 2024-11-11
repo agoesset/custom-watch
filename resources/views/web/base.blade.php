@@ -78,11 +78,11 @@
             /* Layer paling atas: Ring */
         }
 
-        .selected-case {                                                                                
+        .selected-case {
             border: 2px solid #000;
         }
 
-        .part-item {   
+        .part-item {
             cursor: pointer;
         }
 
@@ -111,9 +111,9 @@
                                     </a>
                                 </div>
                             </div>
-                            <div class="col-xl-8 col-lg-7">
+                            <div class="col-xl-10 col-lg-10">
                                 <div class="main-menu main-menu-padding-1 main-menu-lh-1">
-                                    <nav>
+                                    <nav class="d-flex justify-content-end">
                                         <ul>
                                             <li>
                                                 <a href="{{ route('home') }}">HOME </a>
@@ -132,23 +132,9 @@
                                     </nav>
                                 </div>
                             </div>
-                            <div class="col-xl-2 col-lg-3">
-                                <div class="header-action header-action-flex header-action-mrg-right">
-                                    <div class="same-style-2 header-search-1">
-                                        <a class="search-toggle" href="#">
-                                            <i class="icon-magnifier s-open"></i>
-                                            <i class="icon_close s-close"></i>
-                                        </a>
-                                        <div class="search-wrap-1">
-                                            <form action="#">
-                                                <input placeholder="Search products…" type="text">
-                                                <button class="button-search"><i class="icon-magnifier"></i></button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+
+
                     </div>
                 </div>
                 <div class="header-small-device small-device-ptb-1">
@@ -186,11 +172,11 @@
                         <!-- mobile menu start -->
                         <nav>
                             <ul class="mobile-menu">
-                                <li class="menu-item-has-children"><a href="index.html">Home</a></li>
-                                <li class="menu-item-has-children "><a href="#">Custom Jam</a></li>
-                                <li class="menu-item-has-children"><a href="#">Jam Siap Pakai</a></li>
-                                <li class="menu-item-has-children "><a href="#">Tentang Kami</a></li>
-                                <li><a href="contact.html">Kontak Kami</a></li>
+                                <li class="menu-item-has-children"><a href="{{ route('home') }}">Home</a></li>
+                                <li class="menu-item-has-children "><a href="{{ route('configurator') }}">Custom Jam</a></li>
+                                <li class="menu-item-has-children"><a href="{{ route('shop') }}">Jam Siap Pakai</a></li>
+                                <li class="menu-item-has-children "><a href="{{ route('history') }}">Tentang Kami</a></li>
+                                <li><a href="{{ route('contact') }}">Kontak Kami</a></li>
                             </ul>
                         </nav>
                         <!-- mobile menu end -->
