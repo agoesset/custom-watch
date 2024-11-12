@@ -87,7 +87,30 @@
 
         .part-item {
             cursor: pointer;
+            height: 150px;
+            /* Tetapkan tinggi sesuai kebutuhan */
+            width: 150px;
+            /* Tetapkan lebar sesuai kebutuhan */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
         }
+
+        .part-item .card-body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        .part-item img {
+            max-height: 80px;
+            max-width: 80px;
+        }
+
 
         .part-item.active {
             border: 2px solid #007bff;
