@@ -19,8 +19,8 @@
     <div class="product-details-area pt-120 pb-115">
         <div class="container">
             <div class="row mt-5">
-                <!-- Bagian Kiri: Preview Jam -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 col-sm-12">
+                    <!-- Bagian Kiri: Preview Jam -->
                     <div class="product-details-tab" id="previewContainer">
                         <!-- Layer paling bawah: Strap -->
                         @if($straps->isNotEmpty())
@@ -54,7 +54,7 @@
                 </div>
 
                 <!-- Bagian Kanan: Tab untuk Memilih Part -->
-                <div class="col-lg-6 col-md-6">
+                <div class="col-lg-6 col-md-6 col-sm-12">
                     <div class="dec-review-topbar nav mb-45">
                         @if($allCases->isNotEmpty())
                         <a class="active" data-bs-toggle="tab" href="#cases-tab">Cases</a>

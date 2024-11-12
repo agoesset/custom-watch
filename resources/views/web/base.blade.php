@@ -29,12 +29,15 @@
         .product-details-tab {
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 500px;
+            /* Set a static height value */
             display: flex;
             justify-content: center;
-            /* Pusatkan secara horizontal */
+            /* Center horizontally */
             align-items: center;
-            /* Pusatkan secara vertikal */
+            /* Center vertically */
+            overflow: hidden;
+            /* Prevent overflow if necessary */
         }
 
         .layer {
