@@ -25,28 +25,28 @@
                         <!-- Layer paling bawah: Strap -->
                         @if($straps->isNotEmpty())
                         <div class="layer layer1">
-                            <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="{{ $straps->first()->name }}">
+                            <img src="{{ $straps->first()->image }}" id="preview-strap" alt="{{ $straps->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Dial -->
                         @if($dials->isNotEmpty())
                         <div class="layer layer2">
-                            <img src="{{ asset('storage/' . $dials->first()->image) }}" id="preview-dial" alt="{{ $dials->first()->name }}">
+                            <img src="{{ $dials->first()->image }}" id="preview-dial" alt="{{ $dials->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Case -->
                         @if($allCases->isNotEmpty())
                         <div class="layer layer3">
-                            <img src="{{ asset('storage/' . $allCases->first()->image) }}" id="preview-case" alt="{{ $allCases->first()->name }}">
+                            <img src="{{ $allCases->first()->image }}" id="preview-case" alt="{{ $allCases->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Layer paling atas: Ring -->
                         @if($rings->isNotEmpty())
                         <div class="layer layer4">
-                            <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="{{ $rings->first()->name }}">
+                            <img src="{{ $rings->first()->image }}" id="preview-ring" alt="{{ $rings->first()->name }}">
                         </div>
                         @endif
                     </div>
@@ -78,10 +78,13 @@
                             <div class="row" id="casesList">
                                 @foreach($allCases as $case)
                                 @if($case->watchTypes->isNotEmpty())
-                                @php $watchType = $case->watchTypes->first(); @endphp
-                                <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
+                                @php
+                                $watchType = $case->watchTypes->first();
+                                @endphp
+                                <div class="card part-item" data-type="cases" data-image="{{ $case->image }}" data-watch-type-id="{{ $watchType->id }}">
                                     <div class="card-body text-center">
-                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
+                                        <!-- Gambar menggunakan accessor -->
+                                        <img src="{{ $case->image }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
                                         <li class="list-unstyled mt-2">{{ $case->name }}</li>
                                     </div>
                                 </div>
@@ -171,9 +174,9 @@
                                 dialsList.innerHTML = '';
                                 data.dials.forEach(dial => {
                                     dialsList.innerHTML += `
-                                        <div class="card part-item" data-type="dials" data-image="/storage/${dial.image}">
+                                        <div class="card part-item" data-type="dials" data-image="${dial.image}">
                                             <div class="card-body text-center">
-                                                <img src="/storage/${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${dial.name}</li>
                                             </div>
                                         </div>
@@ -185,9 +188,9 @@
                                 ringsList.innerHTML = '';
                                 data.rings.forEach(ring => {
                                     ringsList.innerHTML += `
-                                        <div class="card part-item" data-type="rings" data-image="/storage/${ring.image}">
+                                        <div class="card part-item" data-type="rings" data-image="${ring.image}">
                                             <div class="card-body text-center">
-                                                <img src="/storage/${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${ring.name}</li>
                                             </div>
                                         </div>
@@ -199,9 +202,9 @@
                                 strapsList.innerHTML = '';
                                 data.straps.forEach(strap => {
                                     strapsList.innerHTML += `
-                                        <div class="card part-item" data-type="straps" data-image="/storage/${strap.image}">
+                                        <div class="card part-item" data-type="straps" data-image="${strap.image}">
                                             <div class="card-body text-center">
-                                                <img src="/storage/${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${strap.name}</li>
                                             </div>
                                         </div>
@@ -246,17 +249,17 @@
                             dial: JSON.parse(localStorage.getItem('dials-selected'))?.name || "Tidak Dipilih",
                             ring: JSON.parse(localStorage.getItem('rings-selected'))?.name || "Tidak Dipilih",
                             strap: JSON.parse(localStorage.getItem('straps-selected'))?.name || "Tidak Dipilih",
-                            caseName: JSON.parse(localStorage.getItem('cases-selected'))?.image || "Tidak Dipilih",
-                            dialName: JSON.parse(localStorage.getItem('dials-selected'))?.image || "Tidak Dipilih",
-                            ringName: JSON.parse(localStorage.getItem('rings-selected'))?.image || "Tidak Dipilih",
-                            strapName: JSON.parse(localStorage.getItem('straps-selected'))?.image || "Tidak Dipilih",
+                            caseImage: JSON.parse(localStorage.getItem('cases-selected'))?.image || "Tidak Dipilih",
+                            dialImage: JSON.parse(localStorage.getItem('dials-selected'))?.image || "Tidak Dipilih",
+                            ringImage: JSON.parse(localStorage.getItem('rings-selected'))?.image || "Tidak Dipilih",
+                            strapImage: JSON.parse(localStorage.getItem('straps-selected'))?.image || "Tidak Dipilih",
                         };
 
                         const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A` +
-                            `- Case: ${selectedParts.case} (${selectedParts.caseName})%0A` +
-                            `- Dial: ${selectedParts.dial} (${selectedParts.dialName})%0A` +
-                            `- Ring: ${selectedParts.ring} (${selectedParts.ringName})%0A` +
-                            `- Strap: ${selectedParts.strap} (${selectedParts.strapName})`;
+                            `- Case: ${selectedParts.case} = ${selectedParts.caseImage}%0A` +
+                            `- Dial: ${selectedParts.dial} = ${selectedParts.dialImage}%0A` +
+                            `- Ring: ${selectedParts.ring} = ${selectedParts.ringImage}%0A` +
+                            `- Strap: ${selectedParts.strap} = ${selectedParts.strapImage}`;
 
                         const whatsappNumber = "6285804686544"; // Format: kode negara tanpa "+"
                         const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
