@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateWatchType extends CreateRecord
 {
     protected static string $resource = WatchTypeResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

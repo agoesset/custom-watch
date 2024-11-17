@@ -26,7 +26,10 @@ class HomeController extends Controller
             $allProduct = Product::all();
         }
 
-        return view('web.home', compact('allProduct', 'allCategory'));
+        // Ambil hanya 4 produk
+        $featuredProducts = $allProduct->take(4);
+
+        return view('web.home', compact('allProduct', 'allCategory', 'featuredProducts'));
     }
 
     public function filterProducts(Request $request)

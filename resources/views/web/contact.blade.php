@@ -7,7 +7,7 @@
             <div class="breadcrumb-content text-center">
                 <ul>
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="{{route('home')}}">Home</a>
                     </li>
                     <li class="active">Kontak Kami </li>
                 </ul>
@@ -23,7 +23,7 @@
                         <div class="single-contact-info-3 text-center mb-30">
                             <i class="icon-location-pin "></i>
                             <h4>Alamat Toko</h4>
-                            <p>AEON Mall Sentul City Lantai 1 Unit 1-49, Jl. MH. Thamrin No.49, Citaringgul, Babakan Madang, Bogor Regency, West Java 16810 </p>
+                            <p>Sindangmulya, Cibarusah, Bekasi Regency, West Java 17340 </p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-4">

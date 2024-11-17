@@ -16,6 +16,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Storage;
 
 class WatchRingResource extends Resource
 {
@@ -34,15 +35,21 @@ class WatchRingResource extends Resource
                 TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                FileUpload::make('image')
-                    ->image()
-                    ->directory('rings/images')
-                    ->maxSize(2048)
-                    ->required(),
                 Textarea::make('desc')
                     ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
+                FileUpload::make('image')
+                    ->image()
+                    ->directory('rings')
+                    ->maxSize(2048)
+                    ->deleteUploadedFileUsing(function ($file, $record) {
+                        // Hapus file lama
+                        if ($record && $record->image) {
+                            Storage::disk('public')->delete($record->image);
+                        }
+                    })
+                    ->required(),
             ]);
     }
 

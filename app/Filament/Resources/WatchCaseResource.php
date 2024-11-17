@@ -13,6 +13,8 @@ use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
+use Illuminate\Support\Facades\Storage;
+use Spatie\EloquentSortable\Sortable;
 
 class WatchCaseResource extends Resource
 {
@@ -37,8 +39,14 @@ class WatchCaseResource extends Resource
                     ->columnSpanFull(),
                 FileUpload::make('image')
                     ->image()
-                    ->directory('cases/images')
+                    ->directory('cases')
                     ->maxSize(2048)
+                    ->deleteUploadedFileUsing(function ($file, $record) {
+                        // Hapus file lama
+                        if ($record && $record->image) {
+                            Storage::disk('public')->delete($record->image);
+                        }
+                    })
                     ->required(),
             ]);
     }
@@ -49,6 +57,9 @@ class WatchCaseResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('watchTypes.name') // Akses data dari relasi
+                    ->Sortable()
+                    ->label('Watch Type'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

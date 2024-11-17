@@ -17,6 +17,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Storage;
 
 class ProductResource extends Resource
 {
@@ -69,16 +70,20 @@ class ProductResource extends Resource
                     ])
                     ->createItemButtonLabel('Add Color')
                     ->minItems(1)
-                    ->maxItems(10)
-                    ->required(),
+                    ->maxItems(10),
 
                 FileUpload::make('image')
-                    ->label('Product Images')
-                    ->multiple()
-                    ->required()
                     ->image()
-                    ->directory('products/images')
-                    ->maxSize(2048),
+                    ->multiple()
+                    ->directory('products')
+                    ->maxSize(2048)
+                    ->deleteUploadedFileUsing(function ($file, $record) {
+                        // Hapus file lama
+                        if ($record && $record->image) {
+                            Storage::disk('public')->delete($record->image);
+                        }
+                    })
+                    ->required(),
 
             ]);
     }

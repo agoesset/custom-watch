@@ -8,9 +8,9 @@
             <div class="breadcrumb-content text-center">
                 <ul>
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="{{route('home')}}">Home</a>
                     </li>
-                    <li class="active">Kustom Jam </li>
+                    <li class="active">Custom Jam </li>
                 </ul>
             </div>
         </div>
@@ -19,42 +19,41 @@
     <div class="product-details-area pt-120 pb-115">
         <div class="container">
             <div class="row mt-5">
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-5 col-md-5 col-sm-12">
                     <!-- Bagian Kiri: Preview Jam -->
                     <div class="product-details-tab" id="previewContainer">
                         <!-- Layer paling bawah: Strap -->
                         @if($straps->isNotEmpty())
                         <div class="layer layer1">
-                            <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="Strap Layer">
+                            <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="{{ $straps->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Dial -->
                         @if($dials->isNotEmpty())
                         <div class="layer layer2">
-                            <img src="{{ asset('storage/' . $dials->first()->image) }}" id="preview-dial" alt="Dial Layer">
+                            <img src="{{ asset('storage/' . $dials->first()->image) }}" id="preview-dial" alt="{{ $dials->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Case -->
                         @if($allCases->isNotEmpty())
                         <div class="layer layer3">
-                            <img src="{{ asset('storage/' . $allCases->first()->image) }}" id="preview-case" alt="Case Layer">
+                            <img src="{{ asset('storage/' . $allCases->first()->image) }}" id="preview-case" alt="{{ $allCases->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Layer paling atas: Ring -->
                         @if($rings->isNotEmpty())
                         <div class="layer layer4">
-                            <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="Ring Layer">
+                            <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="{{ $rings->first()->name }}">
                         </div>
                         @endif
                     </div>
-
                 </div>
 
                 <!-- Bagian Kanan: Tab untuk Memilih Part -->
-                <div class="col-lg-6 col-md-6 col-sm-12">
+                <div class="col-lg-7 col-md-7 col-sm-12">
                     <div class="dec-review-topbar nav mb-45">
                         @if($allCases->isNotEmpty())
                         <a class="active" data-bs-toggle="tab" href="#cases-tab">Cases</a>
@@ -68,6 +67,7 @@
                         @if($straps->isNotEmpty())
                         <a data-bs-toggle="tab" href="#straps-tab">Straps</a>
                         @endif
+                        <a data-bs-toggle="tab" href="#checkout-tab">Checkout</a>
                     </div>
 
                     <!-- Konten Tab -->
@@ -79,12 +79,10 @@
                                 @foreach($allCases as $case)
                                 @if($case->watchTypes->isNotEmpty())
                                 @php $watchType = $case->watchTypes->first(); @endphp
-                                <div class="col-md-3 mb-3">
-                                    <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
-                                        <div class="card-body text-center">
-                                            <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
-                                            <li class="list-unstyled mt-2">{{ $case->name }}</li>
-                                        </div>
+                                <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
+                                    <div class="card-body text-center">
+                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
+                                        <li class="list-unstyled mt-2">{{ $case->name }}</li>
                                     </div>
                                 </div>
                                 @endif
@@ -105,6 +103,13 @@
                         <div id="straps-tab" class="tab-pane">
                             <div class="row" id="strapsList"></div>
                         </div>
+
+                        <div id="checkout-tab" class="tab-pane">
+                            <div class="text-center">
+                                <button id="checkoutButton" class="btn btn-primary mt-3">Checkout</button>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -116,24 +121,40 @@
                             item.addEventListener('click', function() {
                                 const type = this.getAttribute('data-type');
                                 const image = this.getAttribute('data-image');
+                                const name = this.querySelector('li').textContent; // Ambil nama dari elemen <li>
+                                const watchTypeId = this.getAttribute('data-watch-type-id');
+
+                                // Simpan status pilihan di localStorage
+                                localStorage.setItem(`${type}-selected`, JSON.stringify({
+                                    image,
+                                    name,
+                                    watchTypeId
+                                }));
 
                                 document.querySelectorAll('.part-item').forEach(part => {
                                     part.classList.remove('active');
                                 });
                                 this.classList.add('active');
 
-                                // Update gambar preview berdasarkan tipe
+                                // Update gambar dan alt text berdasarkan tipe
                                 if (type === 'cases') {
-                                    document.getElementById('preview-case').src = image;
+                                    const caseImg = document.getElementById('preview-case');
+                                    caseImg.src = image;
+                                    caseImg.alt = name;
                                 } else if (type === 'dials') {
-                                    document.getElementById('preview-dial').src = image;
+                                    const dialImg = document.getElementById('preview-dial');
+                                    dialImg.src = image;
+                                    dialImg.alt = name;
                                 } else if (type === 'rings') {
-                                    document.getElementById('preview-ring').src = image;
+                                    const ringImg = document.getElementById('preview-ring');
+                                    ringImg.src = image;
+                                    ringImg.alt = name;
                                 } else if (type === 'straps') {
-                                    document.getElementById('preview-strap').src = image;
+                                    const strapImg = document.getElementById('preview-strap');
+                                    strapImg.src = image;
+                                    strapImg.alt = name;
                                 }
 
-                                const watchTypeId = this.getAttribute('data-watch-type-id');
                                 if (watchTypeId) {
                                     loadParts(watchTypeId);
                                 }
@@ -150,14 +171,12 @@
                                 dialsList.innerHTML = '';
                                 data.dials.forEach(dial => {
                                     dialsList.innerHTML += `
-                                    <div class="col-md-3 mb-3">
                                         <div class="card part-item" data-type="dials" data-image="/storage/${dial.image}">
                                             <div class="card-body text-center">
                                                 <img src="/storage/${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${dial.name}</li>
                                             </div>
                                         </div>
-                                    </div>
                                 `;
                                 });
 
@@ -166,14 +185,12 @@
                                 ringsList.innerHTML = '';
                                 data.rings.forEach(ring => {
                                     ringsList.innerHTML += `
-                                    <div class="col-md-3 mb-3">
                                         <div class="card part-item" data-type="rings" data-image="/storage/${ring.image}">
                                             <div class="card-body text-center">
                                                 <img src="/storage/${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${ring.name}</li>
                                             </div>
                                         </div>
-                                    </div>
                                 `;
                                 });
 
@@ -182,14 +199,12 @@
                                 strapsList.innerHTML = '';
                                 data.straps.forEach(strap => {
                                     strapsList.innerHTML += `
-                                    <div class="col-md-3 mb-3">
                                         <div class="card part-item" data-type="straps" data-image="/storage/${strap.image}">
                                             <div class="card-body text-center">
                                                 <img src="/storage/${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${strap.name}</li>
                                             </div>
                                         </div>
-                                    </div>
                                 `;
                                 });
 
@@ -200,11 +215,59 @@
                             });
                     }
 
+                    function loadSelectedParts() {
+                        const caseData = JSON.parse(localStorage.getItem('cases-selected'));
+                        if (caseData) {
+                            document.getElementById('preview-case').src = caseData.image;
+                        }
+
+                        const dialData = JSON.parse(localStorage.getItem('dials-selected'));
+                        if (dialData) {
+                            document.getElementById('preview-dial').src = dialData.image;
+                        }
+
+                        const ringData = JSON.parse(localStorage.getItem('rings-selected'));
+                        if (ringData) {
+                            document.getElementById('preview-ring').src = ringData.image;
+                        }
+
+                        const strapData = JSON.parse(localStorage.getItem('straps-selected'));
+                        if (strapData) {
+                            document.getElementById('preview-strap').src = strapData.image;
+                        }
+                    }
+
+                    loadSelectedParts();
+
+                    const checkoutButton = document.getElementById('checkoutButton');
+                    checkoutButton.addEventListener('click', function() {
+                        const selectedParts = {
+                            case: JSON.parse(localStorage.getItem('cases-selected'))?.name || "Tidak Dipilih",
+                            dial: JSON.parse(localStorage.getItem('dials-selected'))?.name || "Tidak Dipilih",
+                            ring: JSON.parse(localStorage.getItem('rings-selected'))?.name || "Tidak Dipilih",
+                            strap: JSON.parse(localStorage.getItem('straps-selected'))?.name || "Tidak Dipilih",
+                            caseName: JSON.parse(localStorage.getItem('cases-selected'))?.image || "Tidak Dipilih",
+                            dialName: JSON.parse(localStorage.getItem('dials-selected'))?.image || "Tidak Dipilih",
+                            ringName: JSON.parse(localStorage.getItem('rings-selected'))?.image || "Tidak Dipilih",
+                            strapName: JSON.parse(localStorage.getItem('straps-selected'))?.image || "Tidak Dipilih",
+                        };
+
+                        const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A` +
+                            `- Case: ${selectedParts.case} (${selectedParts.caseName})%0A` +
+                            `- Dial: ${selectedParts.dial} (${selectedParts.dialName})%0A` +
+                            `- Ring: ${selectedParts.ring} (${selectedParts.ringName})%0A` +
+                            `- Strap: ${selectedParts.strap} (${selectedParts.strapName})`;
+
+                        const whatsappNumber = "6285804686544"; // Format: kode negara tanpa "+"
+                        const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+
+                        window.open(whatsappURL, '_blank');
+                    });
+
                     attachPartItemClickEvents();
                 });
             </script>
         </div>
     </div>
 </div>
-
 @endsection

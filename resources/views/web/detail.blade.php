@@ -9,7 +9,7 @@
             <div class="breadcrumb-content text-center">
                 <ul>
                     <li>
-                        <a href="index.html">Home</a>
+                        <a href="{{route('home')}}">Home</a>
                     </li>
                     <li class="active">{{ $product->name }} </li>
                 </ul>

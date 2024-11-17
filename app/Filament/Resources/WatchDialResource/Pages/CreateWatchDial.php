@@ -9,4 +9,9 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateWatchDial extends CreateRecord
 {
     protected static string $resource = WatchDialResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

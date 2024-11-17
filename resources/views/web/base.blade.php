@@ -29,7 +29,7 @@
         .product-details-tab {
             position: relative;
             width: 100%;
-            height: 500px;
+            height: 550px;
             /* Set a static height value */
             display: flex;
             justify-content: center;
@@ -46,9 +46,9 @@
             left: 50%;
             transform: translate(-50%, -50%);
             /* Pastikan layer berada tepat di tengah */
-            width: 400px;
+            width: 550px;
             /* Ukuran gambar */
-            height: 400px;
+            height: 550px;
             /* Ukuran gambar */
         }
 
@@ -111,12 +111,63 @@
             max-width: 80px;
         }
 
-
         .part-item.active {
             border: 2px solid #007bff;
             /* Ganti dengan warna atau gaya yang diinginkan */
             background-color: #f0f8ff;
             /* Ganti dengan warna atau gaya yang diinginkan */
+        }
+
+        @media (max-width: 768px) {
+
+            /* Sesuaikan breakpoint dengan kebutuhan */
+            .col-sm-12 {
+                margin-top: 50px;
+            }
+        }
+
+        /* Default untuk mobile: scroll horizontal */
+        #casesList,
+        #dialsList,
+        #ringsList,
+        #strapsList {
+            display: flex;
+            flex-wrap: nowrap;
+            /* Elemen tidak membungkus */
+            gap: 10px;
+            /* Jarak antar item */
+            overflow-x: auto;
+            /* Scroll horizontal */
+            overflow-y: hidden;
+            /* Nonaktifkan scroll vertikal */
+            padding-bottom: 10px;
+            /* Memberi ruang untuk scrollbar */
+            scroll-behavior: smooth;
+            /* Scroll lebih halus */
+        }
+
+        /* Desktop: grid dengan 4 kolom dan scroll vertikal */
+        @media (min-width: 992px) {
+
+            #casesList,
+            #dialsList,
+            #ringsList,
+            #strapsList {
+                display: grid;
+                /* Ubah menjadi grid */
+                grid-template-columns: repeat(4, 1fr);
+                /* 4 kolom dengan ukuran sama */
+                grid-gap: 15px;
+                /* Jarak antar item di grid */
+                overflow-y: auto;
+                /* Aktifkan scroll vertikal */
+                overflow-x: hidden;
+                /* Nonaktifkan scroll horizontal */
+                max-height: 400px;
+                /* Batasi tinggi maksimal agar bisa discroll */
+                padding-right: 10px;
+                /* Ruang untuk scrollbar vertikal */
+            }
         }
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -211,7 +262,7 @@
                         <ul>
                             <li><i class="icon-phone "></i> +62 851-0157-8882</li>
                             <li><i class="icon-envelope-open "></i> admin@customwatch.id</li>
-                            <li><i class="icon-home"></i> AEON Mall Sentul City Lantai 1 Unit 1-49, Jl. MH. Thamrin No.49, Citaringgul, Babakan Madang, Bogor Regency, West Java 16810</li>
+                            <li><i class="icon-home"></i> Sindangmulya, Cibarusah, Bekasi Regency, West Java 17340</li>
                         </ul>
                     </div>
                     <div class="mobile-social-icon">
@@ -226,31 +277,68 @@
 
         @yield('content')
 
-        <footer class="footer-area bg-gray pt-50 pb-30">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-6 col-md-6">
-                        <div class="contact-info-wrap">
-                            <div class="footer-logo">
-                                <a href="#"><img src="{{asset('assets/images/logo/Customwatch.png')}}" alt="logo"></a>
+        <footer class="footer-area bg-gray-4 pt-50">
+            <div class="footer-top border-bottom-4 pb-55">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="footer-widget mb-40">
+                                <img src="{{asset('assets/images/logo/Customwatch.png')}}" alt="">
+                                <h3 class="footer-title">Quick Shop</h3>
                             </div>
-                            <div class="single-contact-info">
-                                <span>Lokasi Kami</span>
-                                <p>AEON Mall Sentul City Lantai 1 Unit 1-49, Jl. MH. Thamrin No.49, Citaringgul, Babakan Madang, Bogor Regency, West Java 16810</p>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-6 col-12">
+                            <div class="footer-widget ml-70 mb-40">
+                                <h3 class="footer-title">useful links</h3>
+                                <div class="footer-info-list">
+                                    <ul>
+                                        <li><a href="{{route('configurator')}}">Custom Jam</a></li>
+                                        <li><a href="{{route('shop')}}">Jam Siap Pakai</a></li>
+                                        <li><a href="{{route('history')}}">Tentang Kami</a></li>
+                                        <li><a href="{{route('contact')}}">Kontak Kami</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+                            <div class="footer-widget mb-40 ">
+                                <h3 class="footer-title">Contact Us</h3>
+                                <div class="contact-info-2">
+                                    <div class="single-contact-info-2">
+                                        <div class="contact-info-2-icon">
+                                            <i class="icon-cursor icons"></i>
+                                        </div>
+                                        <div class="contact-info-2-content">
+                                            <p>Sindangmulya, Cibarusah, Bekasi Regency, West Java 17340</p>
+                                        </div>
+                                    </div>
+                                    <div class="single-contact-info-2">
+                                        <div class="contact-info-2-icon">
+                                            <i class="icon-envelope-open "></i>
+                                        </div>
+                                        <div class="contact-info-2-content">
+                                            <p>admin@customwatch.id</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="social-style-1 social-style-1-font-inc social-style-1-mrg-2">
+                                    <a href="#"><i class="icon-social-twitter"></i></a>
+                                    <a href="#"><i class="icon-social-facebook"></i></a>
+                                    <a href="#"><i class="icon-social-instagram"></i></a>
+                                    <a href="#"><i class="icon-social-youtube"></i></a>
+                                    <a href="#"><i class="icon-social-pinterest"></i></a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-6">
-                        <div class="footer-right-wrap">
-                            <div class="social-style-2 social-style-2-mrg">
-                                <a href="#"><i class="social_twitter"></i></a>
-                                <a href="#"><i class="social_facebook"></i></a>
-                                <a href="#"><i class="social_googleplus"></i></a>
-                                <a href="#"><i class="social_instagram"></i></a>
-                                <a href="#"><i class="social_youtube"></i></a>
-                            </div>
-                            <div class="copyright">
-                                <p>Copyright © 2024 Customwatch.id | <a href="https://webwirausaha.com/">Built with ❤️ by <span>Webwirausaha.com</span></a>.</p>
+                </div>
+            </div>
+            <div class="footer-bottom pt-30 pb-30">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-6 col-md-6 text-center">
+                            <div class="copyright copyright-center">
+                                <p>Copyright © 2024 Custom Watch | <a href="https://webwirausaha.com/">Built with ❤️ <span>by Web Wirausaha</span></a>.</p>
                             </div>
                         </div>
                     </div>

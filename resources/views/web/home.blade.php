@@ -12,7 +12,7 @@
                             <h1 class="animated">Jam Tangan Custom Eksklusif!</h1>
                             <p class="animated">Koleksi jam tangan kami dirancang khusus untuk mencerminkan gaya pribadi Anda. Pilih, sesuaikan, dan tampil beda.</p>
                             <div class="btn-style-1">
-                                <a class="animated btn-1-padding-1" href="product-details.html">Custom Jam Sekarang</a>
+                                <a class="animated btn-1-padding-1" href="{{route('configurator')}}">Custom Jam Sekarang</a>
                             </div>
                         </div>
                     </div>
@@ -129,7 +129,7 @@
 <div class="banner-area pb-85">
     <div class="container">
         <div class="section-title mb-45">
-            <h2>Our Collections</h2>
+            <h2>Jam Terbaik Kami</h2>
         </div>
         <div class="row">
             <div class="col-lg-7 col-md-7">
