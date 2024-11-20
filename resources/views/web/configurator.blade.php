@@ -255,11 +255,14 @@
                             strapImage: JSON.parse(localStorage.getItem('straps-selected'))?.image || "Tidak Dipilih",
                         };
 
+                        // Mendapatkan APP_URL dari konfigurasi Laravel
+                        const appUrl = "{{ config('app.url') }}";
+
                         const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A` +
-                            `- Case: ${selectedParts.case} = ${selectedParts.caseImage}%0A` +
-                            `- Dial: ${selectedParts.dial} = ${selectedParts.dialImage}%0A` +
-                            `- Ring: ${selectedParts.ring} = ${selectedParts.ringImage}%0A` +
-                            `- Strap: ${selectedParts.strap} = ${selectedParts.strapImage}`;
+                            `- Case: ${selectedParts.case} = ${appUrl}${selectedParts.caseImage}%0A` +
+                            `- Dial: ${selectedParts.dial} = ${appUrl}${selectedParts.dialImage}%0A` +
+                            `- Ring: ${selectedParts.ring} = ${appUrl}${selectedParts.ringImage}%0A` +
+                            `- Strap: ${selectedParts.strap} = ${appUrl}${selectedParts.strapImage}`;
 
                         const whatsappNumber = "6285804686544"; // Format: kode negara tanpa "+"
                         const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
