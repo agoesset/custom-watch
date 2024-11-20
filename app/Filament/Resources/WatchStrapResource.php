@@ -57,6 +57,9 @@ class WatchStrapResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('watchTypes.name') // Akses data dari relasi
+                    ->Sortable()
+                    ->label('Watch Type'),
                 Tables\Columns\ImageColumn::make('image'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()

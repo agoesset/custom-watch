@@ -14,7 +14,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Support\Facades\Storage;
-use Spatie\EloquentSortable\Sortable;
 
 class WatchCaseResource extends Resource
 {
