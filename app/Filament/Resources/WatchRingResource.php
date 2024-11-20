@@ -62,7 +62,10 @@ class WatchRingResource extends Resource
                 Tables\Columns\TextColumn::make('watchTypes.name') // Akses data dari relasi
                     ->Sortable()
                     ->label('Watch Type'),
-                Tables\Columns\ImageColumn::make('image'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->disk('public')
+                    ->height(100)
+                    ->width(100),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()
