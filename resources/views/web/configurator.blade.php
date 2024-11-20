@@ -25,28 +25,28 @@
                         <!-- Layer paling bawah: Strap -->
                         @if($straps->isNotEmpty())
                         <div class="layer layer1">
-                            <img src="{{ $straps->first()->image }}" id="preview-strap" alt="{{ $straps->first()->name }}">
+                            <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="{{ $straps->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Dial -->
                         @if($dials->isNotEmpty())
                         <div class="layer layer2">
-                            <img src="{{ $dials->first()->image }}" id="preview-dial" alt="{{ $dials->first()->name }}">
+                            <img src="{{ asset('storage/'. $dials->first()->image) }}" id="preview-dial" alt="{{ $dials->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Case -->
                         @if($allCases->isNotEmpty())
                         <div class="layer layer3">
-                            <img src="{{ $allCases->first()->image }}" id="preview-case" alt="{{ $allCases->first()->name }}">
+                            <img src="{{ asset('storage/'. $allCases->first()->image) }}" id="preview-case" alt="{{ $allCases->first()->name }}">
                         </div>
                         @endif
 
                         <!-- Layer paling atas: Ring -->
                         @if($rings->isNotEmpty())
                         <div class="layer layer4">
-                            <img src="{{ $rings->first()->image }}" id="preview-ring" alt="{{ $rings->first()->name }}">
+                            <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="{{ $rings->first()->name }}">
                         </div>
                         @endif
                     </div>
@@ -81,10 +81,10 @@
                                 @php
                                 $watchType = $case->watchTypes->first();
                                 @endphp
-                                <div class="card part-item" data-type="cases" data-image="{{ $case->image }}" data-watch-type-id="{{ $watchType->id }}">
+                                <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
                                     <div class="card-body text-center">
                                         <!-- Gambar menggunakan accessor -->
-                                        <img src="{{ $case->image }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
+                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
                                         <li class="list-unstyled mt-2">{{ $case->name }}</li>
                                     </div>
                                 </div>
@@ -174,9 +174,9 @@
                                 dialsList.innerHTML = '';
                                 data.dials.forEach(dial => {
                                     dialsList.innerHTML += `
-                                        <div class="card part-item" data-type="dials" data-image="${dial.image}">
+                                         <div class="card part-item" data-type="dials" data-image="${'/storage/' + dial.image}">
                                             <div class="card-body text-center">
-                                                <img src="${dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${'/storage/' + dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${dial.name}</li>
                                             </div>
                                         </div>
@@ -188,9 +188,9 @@
                                 ringsList.innerHTML = '';
                                 data.rings.forEach(ring => {
                                     ringsList.innerHTML += `
-                                        <div class="card part-item" data-type="rings" data-image="${ring.image}">
+                                        <div class="card part-item" data-type="rings" data-image="${'storage/' + ring.image}">
                                             <div class="card-body text-center">
-                                                <img src="${ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${'storage/' + ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${ring.name}</li>
                                             </div>
                                         </div>
@@ -202,9 +202,9 @@
                                 strapsList.innerHTML = '';
                                 data.straps.forEach(strap => {
                                     strapsList.innerHTML += `
-                                        <div class="card part-item" data-type="straps" data-image="${strap.image}">
+                                        <div class="card part-item" data-type="straps" data-image="${'storage/' + strap.image}">
                                             <div class="card-body text-center">
-                                                <img src="${strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
+                                                <img src="${'storage/' + strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
                                                 <li class="list-unstyled mt-2">${strap.name}</li>
                                             </div>
                                         </div>

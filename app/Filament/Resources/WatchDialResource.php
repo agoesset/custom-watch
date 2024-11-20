@@ -43,11 +43,15 @@ class WatchDialResource extends Resource
                     ->image()
                     ->directory('dials')
                     ->maxSize(2048)
-                    ->deleteUploadedFileUsing(function ($file, $record) {
-                        // Hapus file lama
+                    ->saveUploadedFileUsing(function ($file, $record) {
+                        $filePath = $file->store('dials', 'public');
+
+                        // Hapus file lama setelah file baru berhasil diunggah
                         if ($record && $record->image) {
                             Storage::disk('public')->delete($record->image);
                         }
+
+                        return $filePath; // Simpan path file baru ke database
                     })
                     ->required(),
             ]);

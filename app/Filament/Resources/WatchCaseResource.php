@@ -40,11 +40,15 @@ class WatchCaseResource extends Resource
                     ->image()
                     ->directory('cases')
                     ->maxSize(2048)
-                    ->deleteUploadedFileUsing(function ($file, $record) {
-                        // Hapus file lama
+                    ->saveUploadedFileUsing(function ($file, $record) {
+                        $filePath = $file->store('cases', 'public');
+
+                        // Hapus file lama setelah file baru berhasil diunggah
                         if ($record && $record->image) {
                             Storage::disk('public')->delete($record->image);
                         }
+
+                        return $filePath; // Simpan path file baru ke database
                     })
                     ->required(),
             ]);
