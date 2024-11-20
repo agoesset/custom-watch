@@ -36,7 +36,6 @@ class WatchRingResource extends Resource
                     ->required()
                     ->maxLength(255),
                 Textarea::make('desc')
-                    ->required()
                     ->maxLength(65535)
                     ->columnSpanFull(),
                 FileUpload::make('image')

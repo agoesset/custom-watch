@@ -284,7 +284,9 @@
                         <div class="col-lg-4 col-md-4 col-sm-6 col-12">
                             <div class="footer-widget mb-40">
                                 <img src="{{asset('assets/images/logo/Customwatch.png')}}" alt="">
-                                <h3 class="footer-title">Quick Shop</h3>
+                                <div class="mt-25 contact-info-2-content">
+                                    <p>Sindangmulya, Cibarusah, Bekasi Regency, West Java 17340</p>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-4 col-sm-6 col-12">
