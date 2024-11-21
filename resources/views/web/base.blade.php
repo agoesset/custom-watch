@@ -285,7 +285,7 @@
                             <div class="footer-widget mb-40">
                                 <img src="{{asset('assets/images/logo/Customwatch.png')}}" alt="">
                                 <div class="mt-25 contact-info-2-content">
-                                    <p>Sindangmulya, Cibarusah, Bekasi Regency, West Java 17340</p>
+                                    <p>Custom Watch adalah sebuah bisnis yang berfokus pada penyediaan jam tangan custom berkualitas tinggi dengan desain yang modis dan harga yang kompetitif.</p>
                                 </div>
                             </div>
                         </div>
