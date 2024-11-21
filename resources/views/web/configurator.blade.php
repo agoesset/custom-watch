@@ -25,28 +25,28 @@
                         <!-- Layer paling bawah: Strap -->
                         @if($straps->isNotEmpty())
                         <div class="layer layer1">
-                            <img src="{{ asset('storage/' . $straps->first()->image) }}" id="preview-strap" alt="{{ $straps->first()->name }}">
+                            <img src="" id="preview-strap" alt="">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Dial -->
                         @if($dials->isNotEmpty())
                         <div class="layer layer2">
-                            <img src="{{ asset('storage/'. $dials->first()->image) }}" id="preview-dial" alt="{{ $dials->first()->name }}">
+                            <img src="" id="preview-dial" alt="">
                         </div>
                         @endif
 
                         <!-- Setelah itu: Case -->
                         @if($allCases->isNotEmpty())
                         <div class="layer layer3">
-                            <img src="{{ asset('storage/'. $allCases->first()->image) }}" id="preview-case" alt="{{ $allCases->first()->name }}">
+                            <img src="" id="preview-case" alt="">
                         </div>
                         @endif
 
                         <!-- Layer paling atas: Ring -->
                         @if($rings->isNotEmpty())
                         <div class="layer layer4">
-                            <img src="{{ asset('storage/' . $rings->first()->image) }}" id="preview-ring" alt="{{ $rings->first()->name }}">
+                            <img src="" id="preview-ring" alt="">
                         </div>
                         @endif
                     </div>
