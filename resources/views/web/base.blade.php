@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon -->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.png')}}">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- All CSS is here
 	============================================ -->
@@ -369,19 +370,19 @@
                             <div class="col-lg-7 col-md-6 col-12 col-sm-12">
                                 <div class="product-details-content quickview-content">
                                     <h2 id="product-name"></h2>
-                                    <p id="product-description">Seamlessly predominate enterprise metrics without performance based process improvements.</p>
+                                    <p id="product-description"></p>
                                     <div class="pro-details-price">
                                         <span class="new-price" id="product-price"></span>
-                                        <!-- <span class="old-price">$95.72</span> -->
                                     </div>
-                                    <div class="pro-details-color-wrap">
+
+                                    <div class="pro-details-color-wrap" id="color-section" style="display: none;">
                                         <span>Color:</span>
                                         <div class="pro-details-color-content">
                                             <ul id="product-colors">
-                                                <!-- Warna produk akan ditambahkan oleh JavaScript -->
                                             </ul>
                                         </div>
                                     </div>
+
                                     <div class="pro-details-quality">
                                         <span>Quantity:</span>
                                         <div class="cart-plus-minus">
@@ -533,32 +534,33 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Tombol Buy Now di modal
-            const buyNowModalButton = document.getElementById('buyNowModalButton');
-            const qtyInputModal = document.querySelector('.modal .cart-plus-minus-box');
-            const productNameModal = document.getElementById('product-name');
-            const productPriceModal = document.getElementById('product-price');
-            const colorListModal = document.querySelectorAll('#product-colors li a');
+            const buyNowDetailButton = document.getElementById('buyNowDetailButton');
+            const qtyInputDetail = document.querySelector('.cart-plus-minus-box');
+            const productNameDetail = document.querySelector('.product-details-content h2');
+            const productPriceDetail = document.querySelector('.pro-details-price .new-price');
+            const colorListDetail = document.querySelectorAll('.pro-details-color-content ul li a');
 
-            if (buyNowModalButton) {
-                buyNowModalButton.addEventListener('click', function() {
-                    const productName = productNameModal.textContent.trim();
-                    const productPrice = parseFloat(productPriceModal.textContent.replace('Rp ', '').replace('.', '').replace(',', ''));
-                    const qty = parseInt(qtyInputModal.value);
-                    let selectedColor = 'Belum memilih warna';
+            if (buyNowDetailButton) {
+                buyNowDetailButton.addEventListener('click', function() {
+                    const productName = productNameDetail.textContent.trim();
+                    const productPrice = parseFloat(productPriceDetail.textContent.replace('Rp ', '').replace('.', '').replace(',', ''));
+                    const qty = parseInt(qtyInputDetail.value);
 
-                    colorListModal.forEach(colorElement => {
-                        if (colorElement.classList.contains('active')) {
-                            selectedColor = colorElement.style.backgroundColor;
-                        }
-                    });
-
-                    const totalPrice = productPrice * qty;
-                    const message = `Halo, saya tertarik membeli produk berikut:\n\n` +
+                    let message = `Halo, saya tertarik membeli produk berikut:\n\n` +
                         `Nama Produk: ${productName}\n` +
                         `Jumlah: ${qty}\n` +
-                        `Harga Total: Rp ${totalPrice.toLocaleString('id-ID')}\n` +
-                        `Warna: ${selectedColor}`;
+                        `Harga Total: Rp ${(productPrice * qty).toLocaleString('id-ID')}`;
+
+                    // Hanya tambahkan informasi warna jika ada color yang dipilih
+                    if (colorListDetail && colorListDetail.length > 0) {
+                        let selectedColor = 'Belum memilih warna';
+                        colorListDetail.forEach(colorElement => {
+                            if (colorElement.classList.contains('active')) {
+                                selectedColor = colorElement.style.backgroundColor;
+                            }
+                        });
+                        message += `\nWarna: ${selectedColor}`;
+                    }
 
                     const whatsappUrl = `https://wa.me/6285101578882?text=${encodeURIComponent(message)}`;
                     window.open(whatsappUrl, '_blank');

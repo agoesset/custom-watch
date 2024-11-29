@@ -68,9 +68,7 @@ class ProductResource extends Resource
                         ColorPicker::make('hex_color')
                             ->label('Color Code')
                     ])
-                    ->createItemButtonLabel('Add Color')
-                    ->minItems(1)
-                    ->maxItems(10),
+                    ->createItemButtonLabel('Add Color'),
 
                 FileUpload::make('image')
                     ->image()

@@ -40,20 +40,18 @@
                         <div class="pro-details-price">
                             <span class="new-price">{{ $product->formatted_price }}</span>
                         </div>
+                        @if ($product->color && count($product->color) > 0)
                         <div class="pro-details-color-wrap">
                             <span>Color:</span>
                             <div class="pro-details-color-content">
                                 <ul>
-                                    @if (is_array($product->color) && count($product->color) > 0)
                                     @foreach ($product->color as $color)
                                     <li><a href="#" style="background-color: {{ $color['hex_color'] }};"></a></li>
                                     @endforeach
-                                    @else
-                                    <li><span>No colors available</span></li>
-                                    @endif
                                 </ul>
                             </div>
                         </div>
+                        @endif
                         <div class="pro-details-quality">
                             <span>Quantity:</span>
                             <div class="cart-plus-minus">
