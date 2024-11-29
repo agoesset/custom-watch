@@ -26,21 +26,32 @@ class Product extends Model
         'color' => 'array',
     ];
 
-    public function getFormattedPriceAttribute()
+    protected static function boot()
     {
-        return 'Rp ' . number_format($this->price, 0, ',', '.');
-    }
+        parent::boot();
 
-    protected static function booted()
-    {
+        // Hapus gambar saat model dihapus
         static::deleting(function ($product) {
-            // Hapus semua gambar terkait ketika produk dihapus
-            if ($product->image && is_array($product->image)) {
-                foreach ($product->image as $imagePath) {
-                    Storage::delete('products/' . $imagePath);
+            if (!empty($product->image)) {
+                foreach ($product->image as $image) {
+                    Storage::disk('public')->delete($image);
                 }
             }
         });
+
+        // Hapus gambar lama saat model diupdate dengan gambar baru
+        static::updating(function ($product) {
+            if ($product->isDirty('image') && !empty($product->getOriginal('image'))) {
+                foreach ($product->getOriginal('image') as $oldImage) {
+                    Storage::disk('public')->delete($oldImage);
+                }
+            }
+        });
+    }
+
+    public function getFormattedPriceAttribute()
+    {
+        return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 
     public function categories()

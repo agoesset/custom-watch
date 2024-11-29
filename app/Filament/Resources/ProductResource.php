@@ -77,14 +77,20 @@ class ProductResource extends Resource
                     ->multiple()
                     ->directory('products')
                     ->maxSize(2048)
-                    ->deleteUploadedFileUsing(function ($file, $record) {
-                        // Hapus file lama
-                        if ($record && $record->image) {
-                            Storage::disk('public')->delete($record->image);
+                    ->afterStateUpdated(function ($state, $old, $set) {
+                        // Hapus gambar lama ketika ada update gambar baru
+                        if (!empty($old)) {
+                            foreach ($old as $oldImage) {
+                                Storage::disk('public')->delete($oldImage);
+                            }
                         }
+                        $set('image', $state);
+                    })
+                    ->deleteUploadedFileUsing(function ($file) {
+                        // Hapus file saat tombol delete ditekan
+                        Storage::disk('public')->delete($file);
                     })
                     ->required(),
-
             ]);
     }
 
