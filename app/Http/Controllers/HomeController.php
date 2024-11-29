@@ -145,18 +145,20 @@ class HomeController extends Controller
     public function loadParts($watchTypeId)
     {
         try {
-            $watchType = WatchType::with(['watchDials', 'watchRings', 'watchStraps'])->findOrFail($watchTypeId);
+            $watchType = WatchType::with([
+                'watchDials',
+                'watchRings',
+                'watchStraps'
+            ])->findOrFail($watchTypeId);
 
-            // Pastikan return JSON yang valid
             return response()->json([
                 'dials' => $watchType->watchDials,
                 'rings' => $watchType->watchRings,
                 'straps' => $watchType->watchStraps,
             ]);
         } catch (\Exception $e) {
-            // Tangani error, kirimkan status 500 dengan pesan error
             return response()->json([
-                'error' => 'Failed to load parts. ' . $e->getMessage()
+                'error' => 'Failed to load parts: ' . $e->getMessage()
             ], 500);
         }
     }

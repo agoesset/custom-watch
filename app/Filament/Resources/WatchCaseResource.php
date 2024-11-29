@@ -35,6 +35,11 @@ class WatchCaseResource extends Resource
                 Textarea::make('desc')
                     ->maxLength(65535)
                     ->columnSpanFull(),
+                TextInput::make('price')
+                    ->label('Price')
+                    ->numeric()
+                    ->prefix('Rp')
+                    ->inputMode('decimal'),
                 FileUpload::make('image')
                     ->image()
                     ->directory('cases')
@@ -59,6 +64,9 @@ class WatchCaseResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')
                     ->searchable(),
+                Tables\Columns\TextColumn::make('price')
+                    ->money('idr', true)
+                    ->sortable(),
                 Tables\Columns\TextColumn::make('watchTypes.name') // Akses data dari relasi
                     ->Sortable()
                     ->label('Watch Type'),

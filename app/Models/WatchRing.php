@@ -15,6 +15,7 @@ class WatchRing extends Model
         'name',
         'image',
         'desc',
+        'price',
     ];
 
     public function watchTypes()

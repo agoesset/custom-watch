@@ -11,7 +11,7 @@ class WatchCase extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'image', 'desc'];
+    protected $fillable = ['name', 'image', 'desc', 'price'];
 
     public function watchTypes()
     {

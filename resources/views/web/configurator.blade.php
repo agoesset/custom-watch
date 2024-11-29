@@ -7,10 +7,8 @@
         <div class="container">
             <div class="breadcrumb-content text-center">
                 <ul>
-                    <li>
-                        <a href="{{route('home')}}">Home</a>
-                    </li>
-                    <li class="active">Custom Jam </li>
+                    <li><a href="{{route('home')}}">Home</a></li>
+                    <li class="active">Custom Jam</li>
                 </ul>
             </div>
         </div>
@@ -50,7 +48,6 @@
                         </div>
                         @endif
                     </div>
-                    <!-- Canvas untuk merged image -->
                     <canvas id="mergedCanvas" style="display: none;"></canvas>
                 </div>
 
@@ -83,10 +80,14 @@
                                 @php
                                 $watchType = $case->watchTypes->first();
                                 @endphp
-                                <div class="card part-item" data-type="cases" data-image="{{ asset('storage/' . $case->image) }}" data-watch-type-id="{{ $watchType->id }}">
-                                    <div class="card-body text-center">
-                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-2" style="max-width: 80px;">
-                                        <li class="list-unstyled mt-2">{{ $case->name }}</li>
+                                <div class="card part-item"
+                                    data-type="cases"
+                                    data-image="{{ asset('storage/' . $case->image) }}"
+                                    data-watch-type-id="{{ $watchType->id }}"
+                                    data-price="{{ $case->price }}">
+                                    <div class="card-body text-center part-content">
+                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-3">
+                                        <h5 class="part-name">{{ $case->name }}</h5>
                                     </div>
                                 </div>
                                 @endif
@@ -117,30 +118,96 @@
                 </div>
             </div>
 
+            <style>
+                .part-item {
+                    cursor: pointer;
+                    transition: all 0.3s ease;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 8px;
+                    margin: 10px;
+                    background: white;
+                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+                }
+
+                .part-item:hover {
+                    transform: translateY(-5px);
+                    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+                }
+
+                .part-content {
+                    padding: 20px;
+                }
+
+                .part-item img {
+                    width: 120px;
+                    height: 120px;
+                    object-fit: contain;
+                    margin: 0 auto;
+                    display: block;
+                }
+
+                .part-name {
+                    font-family: 'Poppins', sans-serif;
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #333;
+                    margin: 0;
+                    text-transform: capitalize;
+                    letter-spacing: 0.5px;
+                }
+
+                .part-item.active {
+                    border: 2px solid #007bff;
+                    background-color: #f8f9ff;
+                }
+
+                #casesList,
+                #dialsList,
+                #ringsList,
+                #strapsList {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                    gap: 20px;
+                    padding: 20px;
+                }
+            </style>
+
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
+                    // Attach events to initial case items
+                    attachPartItemClickEvents();
+
+                    // Load saved parts if any
+                    loadSelectedParts();
+
                     function attachPartItemClickEvents() {
                         document.querySelectorAll('.part-item').forEach(item => {
                             item.addEventListener('click', function() {
                                 const type = this.getAttribute('data-type');
                                 const image = this.getAttribute('data-image');
-                                const name = this.querySelector('li').textContent;
+                                const name = this.querySelector('.part-name').textContent;
+                                const price = this.getAttribute('data-price');
                                 const watchTypeId = this.getAttribute('data-watch-type-id');
 
+                                // Save selection
                                 localStorage.setItem(`${type}-selected`, JSON.stringify({
                                     image,
                                     name,
+                                    price,
                                     watchTypeId
                                 }));
 
-                                document.querySelectorAll('.part-item').forEach(part => {
+                                // Update UI
+                                document.querySelectorAll(`.part-item[data-type="${type}"]`).forEach(part => {
                                     part.classList.remove('active');
                                 });
                                 this.classList.add('active');
 
+                                // Update preview
                                 updatePreview(type, image, name);
 
-                                if (watchTypeId) {
+                                // Load related parts if it's a case
+                                if (type === 'cases' && watchTypeId) {
                                     loadParts(watchTypeId);
                                 }
                             });
@@ -167,70 +234,67 @@
                         fetch(`/configurator/load-parts/${watchTypeId}`)
                             .then(response => response.json())
                             .then(data => {
-                                // Update dials
-                                const dialsList = document.getElementById('dialsList');
-                                dialsList.innerHTML = '';
-                                data.dials.forEach(dial => {
-                                    dialsList.innerHTML += `
-                                        <div class="card part-item" data-type="dials" data-image="${'/storage/' + dial.image}">
-                                            <div class="card-body text-center">
-                                                <img src="${'/storage/' + dial.image}" alt="${dial.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                                <li class="list-unstyled mt-2">${dial.name}</li>
-                                            </div>
-                                        </div>
-                                    `;
-                                });
-
-                                // Update rings
-                                const ringsList = document.getElementById('ringsList');
-                                ringsList.innerHTML = '';
-                                data.rings.forEach(ring => {
-                                    ringsList.innerHTML += `
-                                        <div class="card part-item" data-type="rings" data-image="${'/storage/' + ring.image}">
-                                            <div class="card-body text-center">
-                                                <img src="${'/storage/' + ring.image}" alt="${ring.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                                <li class="list-unstyled mt-2">${ring.name}</li>
-                                            </div>
-                                        </div>
-                                    `;
-                                });
-
-                                // Update straps
-                                const strapsList = document.getElementById('strapsList');
-                                strapsList.innerHTML = '';
-                                data.straps.forEach(strap => {
-                                    strapsList.innerHTML += `
-                                        <div class="card part-item" data-type="straps" data-image="${'/storage/' + strap.image}">
-                                            <div class="card-body text-center">
-                                                <img src="${'/storage/' + strap.image}" alt="${strap.name}" class="img-fluid mb-2" style="max-width: 80px;">
-                                                <li class="list-unstyled mt-2">${strap.name}</li>
-                                            </div>
-                                        </div>
-                                    `;
-                                });
-
-                                attachPartItemClickEvents();
+                                updatePartsList('dials', data.dials);
+                                updatePartsList('rings', data.rings);
+                                updatePartsList('straps', data.straps);
                             })
-                            .catch(error => {
-                                console.error('Error loading parts:', error);
+                            .catch(error => console.error('Error loading parts:', error));
+                    }
+
+                    function updatePartsList(type, items) {
+                        const container = document.getElementById(`${type}List`);
+                        if (!container) return;
+
+                        container.innerHTML = '';
+
+                        if (items && items.length > 0) {
+                            items.forEach(item => {
+                                const div = document.createElement('div');
+                                div.className = 'card part-item';
+                                div.setAttribute('data-type', type);
+                                div.setAttribute('data-image', '/storage/' + item.image);
+                                div.setAttribute('data-price', item.price || 0);
+
+                                div.innerHTML = `
+                                    <div class="card-body text-center part-content">
+                                        <img src="/storage/${item.image}" alt="${item.name}" class="img-fluid mb-3">
+                                        <h5 class="part-name">${item.name}</h5>
+                                    </div>
+                                `;
+
+                                container.appendChild(div);
                             });
+
+                            // Attach events to new items
+                            container.querySelectorAll('.part-item').forEach(item => {
+                                attachPartItemClickEvents();
+                            });
+                        }
                     }
 
                     function loadSelectedParts() {
-                        const selectedTypes = ['cases', 'dials', 'rings', 'straps'];
-                        selectedTypes.forEach(type => {
+                        ['cases', 'dials', 'rings', 'straps'].forEach(type => {
                             const selectedData = JSON.parse(localStorage.getItem(`${type}-selected`));
                             if (selectedData) {
                                 updatePreview(type, selectedData.image, selectedData.name);
+
+                                // Also highlight the selected item
+                                const selectedItem = document.querySelector(
+                                    `.part-item[data-type="${type}"][data-image="${selectedData.image}"]`
+                                );
+                                if (selectedItem) {
+                                    selectedItem.classList.add('active');
+                                }
                             }
                         });
                     }
 
+                    // Checkout handler
                     const checkoutButton = document.getElementById('checkoutButton');
                     if (checkoutButton) {
                         checkoutButton.addEventListener('click', async function() {
                             try {
-                                // Cek apakah ada part yang dipilih
+                                // Check if any part is selected
                                 const hasSelectedParts = ['cases', 'dials', 'rings', 'straps'].some(type =>
                                     localStorage.getItem(`${type}-selected`)
                                 );
@@ -240,63 +304,62 @@
                                     return;
                                 }
 
+                                // Create merged image
                                 const canvas = document.getElementById('mergedCanvas');
                                 const ctx = canvas.getContext('2d');
 
                                 canvas.width = 550;
                                 canvas.height = 550;
 
-                                // Fungsi untuk memuat gambar yang dimodifikasi
-                                const loadImage = (src) => {
-                                    return new Promise((resolve, reject) => {
-                                        if (!src || src === "undefined") {
-                                            resolve(null);
-                                            return;
-                                        }
-                                        const img = new Image();
-                                        img.crossOrigin = "anonymous"; // Perbaiki ke lowercase
-                                        img.onload = () => resolve(img);
-                                        img.onerror = (e) => {
-                                            console.error('Error loading image:', src, e);
-                                            reject(new Error(`Failed to load image: ${src}`));
-                                        };
-                                        img.src = src;
-                                    });
-                                };
-
-                                // Load gambar secara berurutan
-                                const layers = [{
-                                        type: 'strap',
-                                        element: document.getElementById('preview-strap')
-                                    },
-                                    {
-                                        type: 'dial',
-                                        element: document.getElementById('preview-dial')
-                                    },
-                                    {
-                                        type: 'case',
-                                        element: document.getElementById('preview-case')
-                                    },
-                                    {
-                                        type: 'ring',
-                                        element: document.getElementById('preview-ring')
-                                    }
-                                ];
-
-                                // Gambar setiap layer
-                                for (const layer of layers) {
-                                    if (layer.element && layer.element.style.display !== 'none' && layer.element.src) {
-                                        try {
-                                            const img = await loadImage(layer.element.src);
-                                            if (img) {
-                                                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-                                            }
-                                        } catch (e) {
-                                            console.error(`Error loading ${layer.type}:`, e);
-                                        }
+                                // Load and draw each layer
+                                for (const part of ['strap', 'dial', 'case', 'ring']) {
+                                    const img = document.getElementById(`preview-${part}`);
+                                    if (img && img.style.display !== 'none' && img.src) {
+                                        await new Promise((resolve) => {
+                                            const tempImg = new Image();
+                                            tempImg.crossOrigin = "anonymous";
+                                            tempImg.onload = () => {
+                                                ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+                                                resolve();
+                                            };
+                                            tempImg.src = img.src;
+                                        });
                                     }
                                 }
 
+                                // Get selected parts data
+                                const selectedParts = {
+                                    case: JSON.parse(localStorage.getItem('cases-selected')) || {
+                                        name: "Tidak Dipilih",
+                                        price: 0
+                                    },
+                                    dial: JSON.parse(localStorage.getItem('dials-selected')) || {
+                                        name: "Tidak Dipilih",
+                                        price: 0
+                                    },
+                                    ring: JSON.parse(localStorage.getItem('rings-selected')) || {
+                                        name: "Tidak Dipilih",
+                                        price: 0
+                                    },
+                                    strap: JSON.parse(localStorage.getItem('straps-selected')) || {
+                                        name: "Tidak Dipilih",
+                                        price: 0
+                                    }
+                                };
+
+                                // Calculate total price
+                                const totalPrice = Object.values(selectedParts)
+                                    .reduce((sum, part) => sum + (parseFloat(part.price) || 0), 0);
+
+                                // Format price function
+                                const formatPrice = price => new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR',
+                                    minimumFractionDigits: 0,
+                                    maximumFractionDigits: 0
+                                }).format(price);
+
+                                // Save merged image
                                 const mergedImage = canvas.toDataURL('image/png');
                                 const formData = new FormData();
                                 formData.append('image', mergedImage);
@@ -312,18 +375,20 @@
 
                                 const data = await response.json();
 
-                                const selectedParts = {
-                                    case: JSON.parse(localStorage.getItem('cases-selected'))?.name || "Tidak Dipilih",
-                                    dial: JSON.parse(localStorage.getItem('dials-selected'))?.name || "Tidak Dipilih",
-                                    ring: JSON.parse(localStorage.getItem('rings-selected'))?.name || "Tidak Dipilih",
-                                    strap: JSON.parse(localStorage.getItem('straps-selected'))?.name || "Tidak Dipilih",
-                                };
-
-                                const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A` +
-                                    `- Case: ${selectedParts.case}%0A` +
-                                    `- Dial: ${selectedParts.dial}%0A` +
-                                    `- Ring: ${selectedParts.ring}%0A` +
-                                    `- Strap: ${selectedParts.strap}%0A%0A` +
+                                // Prepare WhatsApp message
+                                const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A%0A` +
+                                    `*Detail Part*%0A` +
+                                    `• Case: ${selectedParts.case.name}%0A` +
+                                    `• Dial: ${selectedParts.dial.name}%0A` +
+                                    `• Ring: ${selectedParts.ring.name}%0A` +
+                                    `• Strap: ${selectedParts.strap.name}%0A%0A` +
+                                    `*Rincian Harga*%0A` +
+                                    `• Case: ${formatPrice(selectedParts.case.price)}%0A` +
+                                    `• Dial: ${formatPrice(selectedParts.dial.price)}%0A` +
+                                    `• Ring: ${formatPrice(selectedParts.ring.price)}%0A` +
+                                    `• Strap: ${formatPrice(selectedParts.strap.price)}%0A` +
+                                    `━━━━━━━━━━━━━━%0A` +
+                                    `*Total: ${formatPrice(totalPrice)}*%0A%0A` +
                                     `Preview: ${data.imageUrl}`;
 
                                 const whatsappNumber = "6285804686544";
@@ -336,10 +401,6 @@
                             }
                         });
                     }
-
-                    // Initialize
-                    loadSelectedParts();
-                    attachPartItemClickEvents();
                 });
             </script>
         </div>
