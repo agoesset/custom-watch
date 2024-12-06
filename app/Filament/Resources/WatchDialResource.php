@@ -41,6 +41,7 @@ class WatchDialResource extends Resource
                 TextInput::make('price')
                     ->label('Price')
                     ->numeric()
+                    ->required()
                     ->prefix('Rp')
                     ->inputMode('decimal'),
                 FileUpload::make('image')
