@@ -13,24 +13,25 @@ class HomeController extends Controller
 {
     public function index(Request $request)
     {
-        // Ambil semua kategori
         $allCategory = Category::all();
 
-        // Ambil semua produk atau filter berdasarkan kategori jika ada
         if ($request->has('category_id') && $request->category_id != '') {
-            // Filter produk berdasarkan kategori yang dipilih
             $allProduct = Product::whereHas('categories', function ($query) use ($request) {
                 $query->where('category_id', $request->category_id);
-            })->get();
+            })->take(8)->get();
         } else {
-            // Jika tidak ada kategori yang dipilih, tampilkan semua produk
-            $allProduct = Product::all();
+            $allProduct = Product::take(8)->get();
         }
 
-        // Ambil hanya 4 produk
-        $featuredProducts = $allProduct->take(4);
+        // Get latest products from "Jam Terbaik" category
+        $bestWatches = Product::whereHas('categories', function ($query) {
+            $query->where('name', 'Jam Terbaik');
+        })
+            ->latest()
+            ->take(2)
+            ->get();
 
-        return view('web.home', compact('allProduct', 'allCategory', 'featuredProducts'));
+        return view('web.home', compact('allProduct', 'allCategory', 'bestWatches'));
     }
 
     public function filterProducts(Request $request)
@@ -38,13 +39,11 @@ class HomeController extends Controller
         $categoryId = $request->input('category_id');
 
         if ($categoryId != '') {
-            // Filter produk berdasarkan kategori
             $products = Product::whereHas('categories', function ($query) use ($categoryId) {
                 $query->where('category_id', $categoryId);
-            })->get();
+            })->take(8)->get();
         } else {
-            // Jika tidak ada kategori yang dipilih, ambil semua produk
-            $products = Product::all();
+            $products = Product::take(8)->get();
         }
 
         if ($products->isEmpty()) {

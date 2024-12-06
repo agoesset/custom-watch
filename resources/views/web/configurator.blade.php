@@ -17,76 +17,51 @@
     <div class="product-details-area pt-120 pb-115">
         <div class="container">
             <div class="row mt-5">
+                <!-- Preview Container -->
                 <div class="col-lg-5 col-md-5 col-sm-12">
-                    <!-- Bagian Kiri: Preview Jam -->
                     <div class="product-details-tab" id="previewContainer">
-                        <!-- Layer paling bawah: Strap -->
-                        @if($straps->isNotEmpty())
                         <div class="layer layer1">
-                            <img id="preview-strap" style="display: none;">
+                            <img id="preview-strap" style="display: none;" alt="">
                         </div>
-                        @endif
-
-                        <!-- Setelah itu: Dial -->
-                        @if($dials->isNotEmpty())
                         <div class="layer layer2">
-                            <img id="preview-dial" style="display: none;">
+                            <img id="preview-dial" style="display: none;" alt="">
                         </div>
-                        @endif
-
-                        <!-- Setelah itu: Case -->
-                        @if($allCases->isNotEmpty())
                         <div class="layer layer3">
-                            <img id="preview-case" style="display: none;">
+                            <img id="preview-case" style="display: none;" alt="">
                         </div>
-                        @endif
-
-                        <!-- Layer paling atas: Ring -->
-                        @if($rings->isNotEmpty())
                         <div class="layer layer4">
-                            <img id="preview-ring" style="display: none;">
+                            <img id="preview-ring" style="display: none;" alt="">
                         </div>
-                        @endif
                     </div>
-                    <canvas id="mergedCanvas" style="display: none;"></canvas>
                 </div>
 
-                <!-- Bagian Kanan: Tab untuk Memilih Part -->
+                <!-- Part Selection -->
                 <div class="col-lg-7 col-md-7 col-sm-12">
                     <div class="dec-review-topbar nav mb-45">
-                        @if($allCases->isNotEmpty())
                         <a class="active" data-bs-toggle="tab" href="#cases-tab">Cases</a>
-                        @endif
-                        @if($dials->isNotEmpty())
-                        <a data-bs-toggle="tab" href="#dials-tab">Dials</a>
-                        @endif
-                        @if($rings->isNotEmpty())
-                        <a data-bs-toggle="tab" href="#rings-tab">Rings</a>
-                        @endif
-                        @if($straps->isNotEmpty())
-                        <a data-bs-toggle="tab" href="#straps-tab">Straps</a>
-                        @endif
+                        <a class="d-none" data-bs-toggle="tab" href="#dials-tab">Dials</a>
+                        <a class="d-none" data-bs-toggle="tab" href="#rings-tab">Rings</a>
+                        <a class="d-none" data-bs-toggle="tab" href="#straps-tab">Straps</a>
                         <a data-bs-toggle="tab" href="#checkout-tab">Checkout</a>
                     </div>
 
-                    <!-- Konten Tab -->
                     <div class="tab-content dec-review-bottom">
-                        <!-- Tab untuk Cases -->
-                        @if($allCases->isNotEmpty())
+                        <!-- Tab Cases -->
                         <div id="cases-tab" class="tab-pane active">
                             <div class="row" id="casesList">
                                 @foreach($allCases as $case)
                                 @if($case->watchTypes->isNotEmpty())
-                                @php
-                                $watchType = $case->watchTypes->first();
-                                @endphp
+                                @php $watchType = $case->watchTypes->first(); @endphp
                                 <div class="card part-item"
                                     data-type="cases"
                                     data-image="{{ asset('storage/' . $case->image) }}"
                                     data-watch-type-id="{{ $watchType->id }}"
+                                    data-name="{{ $case->name }}"
                                     data-price="{{ $case->price }}">
                                     <div class="card-body text-center part-content">
-                                        <img src="{{ asset('storage/' . $case->image) }}" alt="{{ $case->name }}" class="img-fluid mb-3">
+                                        <img src="{{ asset('storage/' . $case->image) }}"
+                                            alt="{{ $case->name }}"
+                                            class="img-fluid mb-3">
                                         <h5 class="part-name">{{ $case->name }}</h5>
                                     </div>
                                 </div>
@@ -94,24 +69,32 @@
                                 @endforeach
                             </div>
                         </div>
-                        @endif
 
-                        <!-- Tab untuk Dials, Rings, Straps -->
+                        <!-- Tab Dials -->
                         <div id="dials-tab" class="tab-pane">
                             <div class="row" id="dialsList"></div>
                         </div>
 
+                        <!-- Tab Rings -->
                         <div id="rings-tab" class="tab-pane">
                             <div class="row" id="ringsList"></div>
                         </div>
 
+                        <!-- Tab Straps -->
                         <div id="straps-tab" class="tab-pane">
                             <div class="row" id="strapsList"></div>
                         </div>
 
+                        <!-- Tab Checkout -->
                         <div id="checkout-tab" class="tab-pane">
-                            <div class="text-center">
-                                <button id="checkoutButton" class="btn btn-primary mt-3">Checkout</button>
+                            <div class="checkout-content p-4">
+                                <h4 class="mb-4">Detail Pesanan</h4>
+                                <div id="selectedPartsPreview" class="selected-parts-container mb-4"></div>
+                                <div class="total-price-container mb-4">
+                                    <h5>Total Harga:</h5>
+                                    <div id="totalPrice" class="h4 text-primary"></div>
+                                </div>
+                                <button id="checkoutButton" class="btn btn-primary">Lanjutkan ke WhatsApp</button>
                             </div>
                         </div>
                     </div>
@@ -151,9 +134,7 @@
                     font-size: 16px;
                     font-weight: 500;
                     color: #333;
-                    margin: 0;
-                    text-transform: capitalize;
-                    letter-spacing: 0.5px;
+                    margin: 10px 0;
                 }
 
                 .part-item.active {
@@ -170,237 +151,305 @@
                     gap: 20px;
                     padding: 20px;
                 }
+
+                .selected-parts-container {
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                    padding: 20px;
+                }
+
+                .selected-part-item {
+                    padding: 15px;
+                    border-bottom: 1px solid #dee2e6;
+                }
+
+                .selected-part-item:last-child {
+                    border-bottom: none;
+                }
+
+                .total-price-container {
+                    text-align: right;
+                    padding: 20px;
+                    background: #f8f9fa;
+                    border-radius: 8px;
+                }
+
+                @media (max-width: 768px) {
+
+                    #casesList,
+                    #dialsList,
+                    #ringsList,
+                    #strapsList {
+                        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+                    }
+                }
             </style>
 
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
-                    // Attach events to initial case items
-                    attachPartItemClickEvents();
+                    let isLoading = false;
 
-                    // Load saved parts if any
-                    loadSelectedParts();
+                    function formatPrice(price) {
+                        return new Intl.NumberFormat('id-ID', {
+                            style: 'currency',
+                            currency: 'IDR',
+                            minimumFractionDigits: 0,
+                            maximumFractionDigits: 0
+                        }).format(price);
+                    }
 
                     function attachPartItemClickEvents() {
                         document.querySelectorAll('.part-item').forEach(item => {
-                            item.addEventListener('click', function() {
-                                const type = this.getAttribute('data-type');
-                                const image = this.getAttribute('data-image');
-                                const name = this.querySelector('.part-name').textContent;
-                                const price = this.getAttribute('data-price');
-                                const watchTypeId = this.getAttribute('data-watch-type-id');
-
-                                // Save selection
-                                localStorage.setItem(`${type}-selected`, JSON.stringify({
-                                    image,
-                                    name,
-                                    price,
-                                    watchTypeId
-                                }));
-
-                                // Update UI
-                                document.querySelectorAll(`.part-item[data-type="${type}"]`).forEach(part => {
-                                    part.classList.remove('active');
-                                });
-                                this.classList.add('active');
-
-                                // Update preview
-                                updatePreview(type, image, name);
-
-                                // Load related parts if it's a case
-                                if (type === 'cases' && watchTypeId) {
-                                    loadParts(watchTypeId);
-                                }
-                            });
+                            item.addEventListener('click', handlePartClick);
                         });
                     }
 
-                    function updatePreview(type, image, name) {
-                        const elementMap = {
-                            'cases': 'preview-case',
-                            'dials': 'preview-dial',
-                            'rings': 'preview-ring',
-                            'straps': 'preview-strap'
+                    function handlePartClick(event) {
+                        if (isLoading) return;
+
+                        const item = event.currentTarget;
+                        const type = item.dataset.type;
+                        const partData = {
+                            image: item.dataset.image,
+                            name: item.dataset.name,
+                            price: parseFloat(item.dataset.price) || 0,
+                            watchTypeId: item.dataset.watchTypeId
                         };
 
-                        const previewElement = document.getElementById(elementMap[type]);
+                        localStorage.setItem(`custom_${type}`, JSON.stringify(partData));
+                        updatePartSelection(type, item);
+                        updatePreview(type, partData.image);
+
+                        if (type === 'cases' && partData.watchTypeId) {
+                            loadRelatedParts(partData.watchTypeId);
+                        }
+
+                        updateCheckoutPreview();
+                    }
+
+                    function updatePartSelection(type, selectedItem) {
+                        document.querySelectorAll(`.part-item[data-type="${type}"]`)
+                            .forEach(item => item.classList.remove('active'));
+                        selectedItem.classList.add('active');
+                    }
+
+                    function updatePreview(type, imageSrc) {
+                        const previewId = `preview-${type.slice(0, -1)}`;
+                        const previewElement = document.getElementById(previewId);
                         if (previewElement) {
-                            previewElement.src = image;
-                            previewElement.alt = name;
+                            previewElement.src = imageSrc;
                             previewElement.style.display = 'block';
                         }
                     }
 
-                    function loadParts(watchTypeId) {
-                        fetch(`/configurator/load-parts/${watchTypeId}`)
-                            .then(response => response.json())
-                            .then(data => {
-                                updatePartsList('dials', data.dials);
-                                updatePartsList('rings', data.rings);
-                                updatePartsList('straps', data.straps);
-                            })
-                            .catch(error => console.error('Error loading parts:', error));
-                    }
+                    async function loadRelatedParts(watchTypeId) {
+                        if (isLoading) return;
+                        isLoading = true;
 
-                    function updatePartsList(type, items) {
-                        const container = document.getElementById(`${type}List`);
-                        if (!container) return;
+                        try {
+                            const response = await fetch(`/configurator/load-parts/${watchTypeId}`);
+                            if (!response.ok) throw new Error('Network response was not ok');
 
-                        container.innerHTML = '';
+                            const data = await response.json();
 
-                        if (items && items.length > 0) {
-                            items.forEach(item => {
-                                const div = document.createElement('div');
-                                div.className = 'card part-item';
-                                div.setAttribute('data-type', type);
-                                div.setAttribute('data-image', '/storage/' + item.image);
-                                div.setAttribute('data-price', item.price || 0);
-
-                                div.innerHTML = `
-                                    <div class="card-body text-center part-content">
-                                        <img src="/storage/${item.image}" alt="${item.name}" class="img-fluid mb-3">
-                                        <h5 class="part-name">${item.name}</h5>
-                                    </div>
-                                `;
-
-                                container.appendChild(div);
+                            ['dials', 'rings', 'straps'].forEach(type => {
+                                const tab = document.querySelector(`[href="#${type}-tab"]`);
+                                if (tab) {
+                                    tab.classList.toggle('d-none', !(data[type] && data[type].length > 0));
+                                }
                             });
 
-                            // Attach events to new items
-                            container.querySelectorAll('.part-item').forEach(item => {
-                                attachPartItemClickEvents();
-                            });
+                            updatePartsLists(data);
+                        } catch (error) {
+                            console.error('Error loading parts:', error);
+                        } finally {
+                            isLoading = false;
                         }
                     }
 
-                    function loadSelectedParts() {
+                    function updatePartsLists(data) {
+                        ['dials', 'rings', 'straps'].forEach(type => {
+                            const container = document.getElementById(`${type}List`);
+                            if (!container) return;
+
+                            const items = data[type];
+                            if (!items || !items.length) {
+                                container.innerHTML = '<p>Tidak ada item tersedia</p>';
+                                return;
+                            }
+
+                            container.innerHTML = items.map(item => `
+                                <div class="card part-item"
+                                     data-type="${type}"
+                                     data-image="/storage/${item.image}"
+                                     data-name="${item.name}"
+                                     data-price="${item.price || 0}">
+                                    <div class="card-body text-center part-content">
+                                        <img src="/storage/${item.image}"
+                                             alt="${item.name}"
+                                             class="img-fluid mb-3">
+                                        <h5 class="part-name">${item.name}</h5>
+                                    </div>
+                                </div>
+                            `).join('');
+
+                            attachPartItemClickEvents();
+                        });
+                    }
+
+                    function updateCheckoutPreview() {
+                        const container = document.getElementById('selectedPartsPreview');
+                        let totalPrice = 0;
+                        let html = '';
+
                         ['cases', 'dials', 'rings', 'straps'].forEach(type => {
-                            const selectedData = JSON.parse(localStorage.getItem(`${type}-selected`));
-                            if (selectedData) {
-                                updatePreview(type, selectedData.image, selectedData.name);
+                            const savedData = JSON.parse(localStorage.getItem(`custom_${type}`)) || {
+                                name: 'Belum dipilih',
+                                price: 0
+                            };
 
-                                // Also highlight the selected item
-                                const selectedItem = document.querySelector(
-                                    `.part-item[data-type="${type}"][data-image="${selectedData.image}"]`
-                                );
-                                if (selectedItem) {
-                                    selectedItem.classList.add('active');
-                                }
-                            }
+                            totalPrice += savedData.price;
+
+                            html += `
+                                <div class="selected-part-item">
+                                    <div class="part-details">
+                                        <div>
+                                            <strong>${type.charAt(0).toUpperCase() + type.slice(1, -1)}:</strong>
+                                            ${savedData.name}
+                                        </div>
+                                        <div class="part-price">
+                                            ${formatPrice(savedData.price)}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
                         });
+
+                        container.innerHTML = html;
+                        document.getElementById('totalPrice').textContent = formatPrice(totalPrice);
                     }
 
-                    // Checkout handler
-                    const checkoutButton = document.getElementById('checkoutButton');
-                    if (checkoutButton) {
-                        checkoutButton.addEventListener('click', async function() {
-                            try {
-                                // Check if any part is selected
-                                const hasSelectedParts = ['cases', 'dials', 'rings', 'straps'].some(type =>
-                                    localStorage.getItem(`${type}-selected`)
-                                );
+                    async function createMergedImage() {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
 
-                                if (!hasSelectedParts) {
-                                    alert('Silakan pilih minimal satu part jam terlebih dahulu');
-                                    return;
-                                }
+                        canvas.width = 550;
+                        canvas.height = 550;
 
-                                // Create merged image
-                                const canvas = document.getElementById('mergedCanvas');
-                                const ctx = canvas.getContext('2d');
+                        const layers = ['strap', 'dial', 'case', 'ring'];
 
-                                canvas.width = 550;
-                                canvas.height = 550;
-
-                                // Load and draw each layer
-                                for (const part of ['strap', 'dial', 'case', 'ring']) {
-                                    const img = document.getElementById(`preview-${part}`);
-                                    if (img && img.style.display !== 'none' && img.src) {
-                                        await new Promise((resolve) => {
-                                            const tempImg = new Image();
-                                            tempImg.crossOrigin = "anonymous";
-                                            tempImg.onload = () => {
-                                                ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
-                                                resolve();
-                                            };
-                                            tempImg.src = img.src;
-                                        });
-                                    }
-                                }
-
-                                // Get selected parts data
-                                const selectedParts = {
-                                    case: JSON.parse(localStorage.getItem('cases-selected')) || {
-                                        name: "Tidak Dipilih",
-                                        price: 0
-                                    },
-                                    dial: JSON.parse(localStorage.getItem('dials-selected')) || {
-                                        name: "Tidak Dipilih",
-                                        price: 0
-                                    },
-                                    ring: JSON.parse(localStorage.getItem('rings-selected')) || {
-                                        name: "Tidak Dipilih",
-                                        price: 0
-                                    },
-                                    strap: JSON.parse(localStorage.getItem('straps-selected')) || {
-                                        name: "Tidak Dipilih",
-                                        price: 0
-                                    }
-                                };
-
-                                // Calculate total price
-                                const totalPrice = Object.values(selectedParts)
-                                    .reduce((sum, part) => sum + (parseFloat(part.price) || 0), 0);
-
-                                // Format price function
-                                const formatPrice = price => new Intl.NumberFormat('id-ID', {
-                                    style: 'currency',
-                                    currency: 'IDR',
-                                    minimumFractionDigits: 0,
-                                    maximumFractionDigits: 0
-                                }).format(price);
-
-                                // Save merged image
-                                const mergedImage = canvas.toDataURL('image/png');
-                                const formData = new FormData();
-                                formData.append('image', mergedImage);
-
-                                const response = await fetch('/save-merged-image', {
-                                    method: 'POST',
-                                    headers: {
-                                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
-                                        'Accept': 'application/json'
-                                    },
-                                    body: formData
+                        for (const layer of layers) {
+                            const img = document.getElementById(`preview-${layer}`);
+                            if (img && img.style.display !== 'none' && img.src) {
+                                await new Promise((resolve, reject) => {
+                                    const tempImg = new Image();
+                                    tempImg.crossOrigin = "anonymous";
+                                    tempImg.onload = () => {
+                                        ctx.drawImage(tempImg, 0, 0, canvas.width, canvas.height);
+                                        resolve();
+                                    };
+                                    tempImg.onerror = reject;
+                                    tempImg.src = img.src;
                                 });
+                            }
+                        }
 
-                                const data = await response.json();
+                        return canvas.toDataURL('image/png');
+                    }
 
-                                // Prepare WhatsApp message
-                                const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A%0A` +
-                                    `*Detail Part*%0A` +
-                                    `• Case: ${selectedParts.case.name}%0A` +
-                                    `• Dial: ${selectedParts.dial.name}%0A` +
-                                    `• Ring: ${selectedParts.ring.name}%0A` +
-                                    `• Strap: ${selectedParts.strap.name}%0A%0A` +
-                                    `*Rincian Harga*%0A` +
-                                    `• Case: ${formatPrice(selectedParts.case.price)}%0A` +
-                                    `• Dial: ${formatPrice(selectedParts.dial.price)}%0A` +
-                                    `• Ring: ${formatPrice(selectedParts.ring.price)}%0A` +
-                                    `• Strap: ${formatPrice(selectedParts.strap.price)}%0A` +
-                                    `━━━━━━━━━━━━━━%0A` +
-                                    `*Total: ${formatPrice(totalPrice)}*%0A%0A` +
-                                    `Preview: ${data.imageUrl}`;
+                    async function handleCheckout() {
+                        try {
+                            const selectedParts = ['cases', 'dials', 'rings', 'straps'].reduce((acc, type) => {
+                                const data = JSON.parse(localStorage.getItem(`custom_${type}`)) || {
+                                    name: 'Belum dipilih',
+                                    price: 0
+                                };
+                                acc[type] = data;
+                                return acc;
+                            }, {});
 
-                                const whatsappNumber = "6285804686544";
-                                const whatsappURL = `https://wa.me/${whatsappNumber}?text=${message}`;
+                            const totalPrice = Object.values(selectedParts)
+                                .reduce((sum, part) => sum + part.price, 0);
 
-                                window.open(whatsappURL, '_blank');
-                            } catch (error) {
-                                console.error('Error:', error);
-                                alert('Terjadi kesalahan: ' + error.message);
+                            const mergedImage = await createMergedImage();
+
+                            const response = await fetch('/save-merged-image', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                                },
+                                body: JSON.stringify({
+                                    image: mergedImage
+                                })
+                            });
+
+                            if (!response.ok) throw new Error('Failed to save merged image');
+
+                            const result = await response.json();
+
+                            const message = `Halo Admin,%0ASaya ingin custom jam dengan rincian:%0A%0A` +
+                                `*Detail Komponen*%0A` +
+                                `• Case: ${selectedParts.cases.name} (${formatPrice(selectedParts.cases.price)})%0A` +
+                                `• Dial: ${selectedParts.dials.name} (${formatPrice(selectedParts.dials.price)})%0A` +
+                                `• Ring: ${selectedParts.rings.name} (${formatPrice(selectedParts.rings.price)})%0A` +
+                                `• Strap: ${selectedParts.straps.name} (${formatPrice(selectedParts.straps.price)})%0A%0A` +
+                                `*Total: ${formatPrice(totalPrice)}*%0A%0A` +
+                                `Preview Jam: ${result.imageUrl}`;
+
+                            window.open(
+                                `https://wa.me/6285804686544?text=${message}`,
+                                '_blank'
+                            );
+                        } catch (error) {
+                            console.error('Error during checkout:', error);
+                            alert('Terjadi kesalahan saat checkout. Silakan coba lagi.');
+                        }
+                    }
+
+                    // Initialize
+                    attachPartItemClickEvents();
+                    updateCheckoutPreview();
+
+                    // Event Listeners
+                    document.getElementById('checkoutButton')?.addEventListener('click', handleCheckout);
+
+                    document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                        tab.addEventListener('shown.bs.tab', () => {
+                            if (tab.getAttribute('href') === '#checkout-tab') {
+                                updateCheckoutPreview();
                             }
                         });
+                    });
+
+                    // Load saved selections if any
+                    function loadSavedSelections() {
+                        ['cases', 'dials', 'rings', 'straps'].forEach(type => {
+                            const saved = localStorage.getItem(`custom_${type}`);
+                            if (saved) {
+                                try {
+                                    const data = JSON.parse(saved);
+                                    updatePreview(type, data.image);
+
+                                    const item = document.querySelector(
+                                        `.part-item[data-type="${type}"][data-image="${data.image}"]`
+                                    );
+                                    if (item) {
+                                        item.classList.add('active');
+                                    }
+
+                                    if (type === 'cases' && data.watchTypeId) {
+                                        loadRelatedParts(data.watchTypeId);
+                                    }
+                                } catch (e) {
+                                    console.error('Error loading saved selection:', e);
+                                }
+                            }
+                        });
+                        updateCheckoutPreview();
                     }
+
+                    loadSavedSelections();
                 });
             </script>
         </div>

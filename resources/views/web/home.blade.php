@@ -116,7 +116,7 @@
         </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container">
         <div class="tab-content jump">
             <div id="productContainer">
                 @include('web.partials.products', ['allProduct' => $allProduct])
