@@ -216,14 +216,50 @@
                             watchTypeId: item.dataset.watchTypeId
                         };
 
+                        // Jika memilih case baru, reset semua pilihan lain
+                        if (type === 'cases') {
+                            // Reset localStorage untuk part lain
+                            ['dials', 'rings', 'straps'].forEach(otherType => {
+                                localStorage.removeItem(`custom_${otherType}`);
+                            });
+
+                            // Reset preview images
+                            ['dial', 'ring', 'strap'].forEach(partType => {
+                                const previewElement = document.getElementById(`preview-${partType}`);
+                                if (previewElement) {
+                                    previewElement.style.display = 'none';
+                                    previewElement.src = '';
+                                }
+                            });
+
+                            // Reset container part lain
+                            ['dialsList', 'ringsList', 'strapsList'].forEach(containerId => {
+                                const container = document.getElementById(containerId);
+                                if (container) {
+                                    container.innerHTML = '';
+                                }
+                            });
+
+                            // Reset tab visibility kecuali Cases dan Checkout
+                            document.querySelectorAll('[data-bs-toggle="tab"]').forEach(tab => {
+                                const href = tab.getAttribute('href');
+                                if (href !== '#cases-tab' && href !== '#checkout-tab') {
+                                    tab.classList.add('d-none');
+                                }
+                            });
+                        }
+
+                        // Simpan data part yang dipilih
                         localStorage.setItem(`custom_${type}`, JSON.stringify(partData));
                         updatePartSelection(type, item);
                         updatePreview(type, partData.image);
 
+                        // Load part terkait jika memilih case
                         if (type === 'cases' && partData.watchTypeId) {
                             loadRelatedParts(partData.watchTypeId);
                         }
 
+                        // Update preview checkout
                         updateCheckoutPreview();
                     }
 
